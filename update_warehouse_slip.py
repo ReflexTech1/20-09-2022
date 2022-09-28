@@ -24,16 +24,21 @@ with sqlite3.connect('Reflex Footwear.sql3') as conn:
     options = StringVar()
     options.set(my_list[0])
 
+def submit_root(e):
+   command=update_warehouse_slip()
 
-def update_clicking():
+root.bind('<Return>', lambda e: submit_root(e))
+
+
+def update_warehouse_slip():
     code = options.get()
     balance = Balance.get()
 
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()
-        cursor.execute('UPDATE SlipProduction SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
-        cursor.execute('UPDATE SlipProduction SET Closing=Closing+? WHERE Order2=?', [balance, code, ])
-        cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Clicking) VALUES(?,?,?,?)', [
+        cursor.execute('UPDATE SlipProduction SET Warehouse=Warehouse+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SlipProduction SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+        cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Warehouse) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
         cursor.close()
@@ -43,14 +48,14 @@ def update_clicking():
 
 
 # Inserting labels and field of input
-label_0 = Label(root, text="Clicking Score", background="lightblue1",
-                width=20, font=("Arial", 20, "bold")).place(x=80, y=23)
+label_0 = Label(root, text="Warehouse Received", background="lightblue1",
+                width=20, font=("Arial", 20, "bold")).place(x=50, y=23)
 
 label_1 = Label(root, text="Order No.", width=20, background="lightblue1", font=(
     "Arial", 12, "bold")).place(x=20, y=100)
 option_1 = OptionMenu(root, options, *my_list).place(x=180, y=100)
 
-label_2 = Label(root, text="Quantity Clicked", width=20,
+label_2 = Label(root, text="Quantity", width=20,
                 background="lightblue1", font=("Arial", 12, "bold")).place(x=20, y=140)
 entry_2 = Entry(root, textvar=Balance, background="lightblue1",
                 font=("Arial", 12, "bold")).place(x=180, y=140)
@@ -62,7 +67,7 @@ style.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
 
 # Inserting buttons
 submit1 = Button(root, text='Submit', style='S.TButton',
-                 width=11, command=update_clicking).place(x=20, y=190)
+                 width=11, command=update_warehouse_slip).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
 

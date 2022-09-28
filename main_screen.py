@@ -125,31 +125,31 @@ style = Style()
 style.configure('N.TButton', font=('Arial Narrow', 20, 'bold'), foreground='red', background='skyblue1')
 
 # Images
-img = PhotoImage(file=r"C:\Production Software\Buttons\sig.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\sig.png")
 img1 = img.subsample(1, 1)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\exit.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\exit.png")
 img2 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\orders_in_house.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\orders_in_house.png")
 img3 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\handlacing.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\handlacing.png")
 img4 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\stock_in_house.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\stock_in_house.png")
 img5 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\logistics.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\logistics.png")
 img6 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\production.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\production.png")
 img8 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\export.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\export.png")
 img9 = img.subsample(2, 2)
 
-img = PhotoImage(file=r"C:\Production Software\Buttons\archive.png")
+img = PhotoImage(file=r"C:\RSoft\Current\Buttons\archive.png")
 img10 = img.subsample(2, 2)
 
 # Setting image in label

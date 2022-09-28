@@ -104,8 +104,8 @@ def young_boys_sandal():
         cursor.execute(r'INSERT INTO MySandals (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Binding,Material,Sock,Soles3,Soles4,Soles5,Soles6,Soles7,Soles8) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "YOUNGER BOYS SANDAL", delivery, qty, qty, bind, material, sock, size3, size4, size5, size6, size7, size8])
         # Insert into Production
-        cursor.execute(r'INSERT INTO SandalProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "YOUNGER BOYS SANDAL", delivery, qty, qty, "0", "0", "0", qty])
+        cursor.execute(r'INSERT INTO SandalProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "YOUNGER BOYS SANDAL", delivery, qty, qty, "0", "0", "0", "0", qty])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSandal (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size3,Size4,Size5,Size6,Size7,Size8) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "YOUNGER BOYS SANDAL", qty, delivery, size3, size4, size5, size6, size7, size8])
         # Insert Into Required

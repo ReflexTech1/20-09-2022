@@ -111,8 +111,8 @@ def nsme_slipper():
         cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Binding,Elastic,Material,Sock,NSMESoles6,NSMESoles7,NSMESoles8,NSMESoles9,NSMESoles10,NSMESoles11) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, bind, elast, material,sock,size6, size7, size8, size9, size10, size11])
         # Insert into Production
-        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, "0", "0", "0", qty, "0",])
+        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,NSMESoles6,NSMESoles7,NSMESoles8,NSMESoles9,NSMESoles10,NSMESoles11) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery,size6, size7, size8, size9, size10, size11])
         # Insert Into Required

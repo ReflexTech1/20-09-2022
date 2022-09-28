@@ -87,8 +87,8 @@ def mens_slipper():
         cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Binding,Elastic,Material,Sock,Soles67,Soles89,Soles1011) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "MENS SLIPPER", delivery, qty, qty, bind, elast, material, sock, size67, size89, size1011])
         # Insert into Production
-        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS SLIPPER", delivery, qty, qty, "0", "0", "0", qty])
+        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "MENS SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size67,Size89,Size1011) VALUES(?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "MENS SLIPPER", qty, delivery, size67, size89, size1011])
         # Insert Into Required

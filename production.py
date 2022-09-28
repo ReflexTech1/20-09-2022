@@ -44,7 +44,7 @@ def DblClick(event):
     if order is not None:
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped FROM Production WHERE Order2=?', (order,))
+            cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM Production WHERE Order2=?', (order,))
             results = cursor.fetchall()
 
             item_0_in_result = [_[0] for _ in results] # Factory
@@ -57,8 +57,9 @@ def DblClick(event):
             item_0_in_result7 = [_[7] for _ in results] # Closing
             item_0_in_result8 = [_[8] for _ in results] # Finishing
             item_0_in_result9 = [_[9] for _ in results] # Despatch
-            item_0_in_result10 = [_[10] for _ in results] # To Ship
-            item_0_in_result11 = [_[11] for _ in results] # Shipped
+            item_0_in_result10 = [_[10] for _ in results] # Warehouse
+            item_0_in_result11 = [_[11] for _ in results] # To Ship
+            item_0_in_result12 = [_[12] for _ in results] # Shipped
 
 
             Label(root2, text="Planned:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=40, y=150)
@@ -88,11 +89,14 @@ def DblClick(event):
             Label(root2, text="In Despatch:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=300)
             Label(root2, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=300)
 
-            Label(root2, text="Balance To Ship:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
-            Label(root2, text=item_0_in_result10, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
+            Label(root2, text="In Warehouse:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
+            Label(root2, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
 
-            Label(root2, text="Shipped:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=400)
-            Label(root2, text=item_0_in_result11, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=400)
+            Label(root2, text="Balance To Ship:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=400)
+            Label(root2, text=item_0_in_result10, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=400)
+
+            Label(root2, text="Shipped:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=450)
+            Label(root2, text=item_0_in_result11, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=450)
 
             cursor.close()
 
@@ -105,10 +109,9 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip FROM Production")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip FROM Production")
         for row in mycursor:
-                tree.insert('', 'end',values=row[0:9], tags=('evenrow'))
-                # tree.insert('', 'end',values=row[0:9], tags=('oddrow'))
+                tree.insert('', 'end',values=row[0:12])
 
 frame = Frame(root)
 frame.pack()
@@ -123,7 +126,7 @@ style.map('Treeview', background=[('selected', 'firebrick')])
 
 # Modify the font of the heading and select columns
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9), height=44, show="headings")
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), height=44, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="Order No.", anchor=N)
@@ -134,7 +137,8 @@ tree.heading(5, text="To Click")
 tree.heading(6, text="In Closing")
 tree.heading(7, text="In Finishing")
 tree.heading(8, text="In Despatch")
-tree.heading(9, text="To Ship")
+tree.heading(9, text="In Warehouse")
+tree.heading(10, text="To Ship")
 
 tree.column(1, width=160)
 tree.column(2, width=230)
@@ -145,6 +149,7 @@ tree.column(6, width=160)
 tree.column(7, width=160)
 tree.column(8, width=160)
 tree.column(9, width=160)
+tree.column(10, width=160)
 
 scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
 scroll.pack(side='right', fill='y')
@@ -176,6 +181,12 @@ def tkinter3():
 
 
 def tkinter4():
+    ret = os.system('python update_warehouse.py')
+    if ret:
+        production()
+
+
+def tkinter5():
     ret = os.system('python update_shipped.py')
     if ret:
         production()
@@ -208,7 +219,8 @@ mb["menu"]  =  mb.menu
 mb.menu.add_command (label = "Clicking", command = tkinter1)
 mb.menu.add_command (label = "Closing", command = tkinter2)
 mb.menu.add_command (label = "Despatch", command = tkinter3)
-mb.menu.add_command (label = "Shipped", command = tkinter4)
+mb.menu.add_command (label = "Warehouse", command = tkinter4)
+mb.menu.add_command (label = "Shipped", command = tkinter5)
 
 mb.pack()
 btn5 = Button(root, text="Export", style='R.TButton', command=tkinter6).pack(side='right')

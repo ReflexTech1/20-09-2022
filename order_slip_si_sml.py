@@ -135,8 +135,8 @@ def si_sml_slipper():
         cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Binding,Elastic,Material,Sock,SISoles4,SISoles5,SISoles6,SISoles7,SISoles8,SISoles9,SISoles10,SISoles11,SISoles12) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "SI SMALL SLIPPER", delivery, qty, qty, bind, elast, material, sock, size4, size5, size6, size7, size8, size9, size10, size11, size12])
         # Insert into Production
-        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "SI SMALL SLIPPER", delivery, qty, qty, "0", "0", "0", qty])
+        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "SI SMALL SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,SISoles4,SISoles5,SISoles6,SISoles7,SISoles8,SISoles9,SISoles10,SISoles11,SISoles12) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "SI SMALL SLIPPER", qty, delivery, size4, size5, size6, size7, size8, size9, size10, size11, size12])
         # Insert Into Required

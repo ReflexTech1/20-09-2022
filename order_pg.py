@@ -49,8 +49,8 @@ def order_pg():
         cursor.execute(r'INSERT INTO MyShoe (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances) VALUES(?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", delivery, qty, qty])
         # Insert into Production
-        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", delivery, qty, qty, "0", "0", "0", qty, "0",])
+        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", qty, delivery, size8, size9, size10, size11, size12, size13, size1])
