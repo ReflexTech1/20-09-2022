@@ -32,7 +32,7 @@ def find(pattern, path):
 
 
 # convert sqlite databases(.db,.sqlite) to pandas dataframe(excel with each table as a different sheet or individual csv sheets)
-def save_db(dbpath=r'C:\Production Software\Reflex Footwear.sql3', excel_path=None, csv_path=None, extension="*.sqlite", csvs=True, excels=True):
+def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, csv_path=None, extension="*.sqlite", csvs=True, excels=True):
     if (excels == False and csvs == True):
         print("Atleast one of the parameters need to be true: csvs or excels")
         return -1

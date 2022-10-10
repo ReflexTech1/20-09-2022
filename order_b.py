@@ -120,9 +120,24 @@ def order_b():
         updated = cursor.rowcount
         conn.commit()
         cursor.close()
+
+    with sqlite3.connect('Log Sheets.sql3') as conn2:
+        cursor2 = conn2.cursor()
+        code = OrderNo.get()
+        barcode = OrderNo.get()
+        size2 = Size2.get()
+        size3 = Size3.get()
+        size4 = Size4.get()
+        size5 = Size5.get()
+        delivery = Delivery.get()
+        qty = Quantity.get()
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code) # ,[ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
+        updated = cursor2.rowcount
+        conn2.commit()
+        cursor2.close()
         root.destroy()
         sys.exit(updated)  # return value whether record has been updated
-
 
 label_0 = Label(root, text="Boys Synthetic", width=13,
                 background="lightskyblue3", font=("bold", 20)).place(x=85, y=23)
