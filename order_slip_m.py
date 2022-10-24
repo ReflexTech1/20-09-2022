@@ -130,6 +130,20 @@ def mens_slipper():
         updated = cursor.rowcount
         conn.commit()
         cursor.close()
+
+    with sqlite3.connect('Log Sheets.sql3') as conn2:
+        cursor2 = conn2.cursor()
+        code = OrderNo.get()
+        barcode = OrderNo.get()
+        size23 = Size23.get()
+        size45 = Size45.get()
+        delivery = Delivery.get()
+        qty = Quantity.get()
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6/7,Size8/9,Size10/11,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6/7,Size8/9,Size10/11,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS SLIPPER", size67, size89, size1011, qty, 158])
+        updated = cursor2.rowcount
+        conn2.commit()
+        cursor2.close()
         root.destroy()
         sys.exit(updated)  # return value whether record has been updated
 

@@ -183,8 +183,11 @@ Button(root, text='Mens Synthetic', style='S.TButton', width=17,
        command=lambda: calc(r'Mens Synthetic')).place(x=20, y=500)
 Button(root, text='Pre-Boys Leather', style='S.TButton', width=17,
        command=lambda: calc(r'Pre-Boys Leather',)).place(x=190, y=420)
-Button(root, text='Boys Leather', style='S.TButton', width=17,
-       command=lambda: calc(r'Boys Leather',)).place(x=190, y=460)
+
+
+Button(root, text='Boys Leather', style='S.TButton', width=17, command=lambda: calc(r'Boys Leather',)).place(x=190, y=460)
+
+
 Button(root, text='Mens Leather', style='S.TButton', width=17,
        command=lambda: calc(r'Mens Leather',)).place(x=190, y=500)
 Button(root, text='Pre-Boys Idler', style='S.TButton', width=17,

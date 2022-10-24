@@ -137,6 +137,25 @@ def order_pbl():
         updated = cursor.rowcount
         conn.commit()
         cursor.close()
+
+    with sqlite3.connect('Log Sheets.sql3') as conn2:
+        cursor2 = conn2.cursor()
+        code = OrderNo.get()
+        barcode = OrderNo.get()
+        size8 = Size8.get()
+        size9 = Size9.get()
+        size10 = Size10.get()
+        size11 = Size11.get()
+        size12 = Size12.get()
+        size13 = Size13.get()
+        size1 = Size1.get()
+        delivery = Delivery.get()
+        qty = Quantity.get()
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE BOYS LEATHER", size8, size9, size10, size11, size12, size13, size1, qty, 158])
+        updated = cursor2.rowcount
+        conn2.commit()
+        cursor2.close()
         root.destroy()
         sys.exit(updated)
 

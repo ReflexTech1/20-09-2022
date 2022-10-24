@@ -25,7 +25,7 @@ with sqlite3.connect('Reflex Footwear.sql3') as conn:
     options.set(my_list[0])
 
 
-def update_clicking():
+def update_despatch_slip():
     code = options.get()
     balance = Balance.get()
 
@@ -33,6 +33,8 @@ def update_clicking():
         cursor = conn.cursor()
         cursor.execute('UPDATE SlipProduction SET Despatch=Despatch+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE SlipProduction SET Finishing=Finishing-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SlipProd_Balances SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SlipProd_Balances SET Finishing=Finishing-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Despatch) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
@@ -62,8 +64,14 @@ style.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
 
 # Inserting buttons
 submit1 = Button(root, text='Submit', style='S.TButton',
-                 width=11, command=update_clicking).place(x=20, y=190)
+                 width=11, command=update_despatch_slip).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
+
+
+def submit_root(e):
+   command=update_despatch_slip()
+
+root.bind('<Return>', lambda e: submit_root(e))
 
 root.mainloop()

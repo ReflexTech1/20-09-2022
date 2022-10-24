@@ -125,6 +125,23 @@ def order_mi():
         updated = cursor.rowcount
         conn.commit()
         cursor.close()
+
+    with sqlite3.connect('Log Sheets.sql3') as conn2:
+        cursor2 = conn2.cursor()
+        code = OrderNo.get()
+        barcode = OrderNo.get()
+        size6 = Size6.get()
+        size7 = Size7.get()
+        size8b = Size8b.get()
+        size9b = Size9b.get()
+        size10b = Size10b.get()
+        delivery = Delivery.get()
+        qty = Quantity.get()
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size7,Size8,Size9,Size10,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS IDLER", delivery, size6, size7, size8b, size9b, size10b, qty, 158])
+        updated = cursor2.rowcount
+        conn2.commit()
+        cursor2.close()
         root.destroy()
         sys.exit(updated)
 

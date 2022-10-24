@@ -17,7 +17,7 @@ root.config(bg="lightblue2")
 
 dateTimeObj = datetime.now()
 
-l1 = Label(root, text="LogSheet Tracker", width=120, anchor=CENTER, font=["Bodoni MT", 30, "bold"], background="grey80", relief="raised").pack(side='top', ipady=10)
+l1 = Label(root, text="Production", width=120, anchor=CENTER, font=["Bodoni MT", 30, "bold"], background="grey80", relief="raised").pack(side='top', ipady=10)
 # l1 = customtkinter.CTkLabel(root, text="LogSheet Tracker", text_font=("Bodoni MT", -30), bg="grey80").pack(side='top', ipady=10)
 
 
@@ -31,7 +31,7 @@ def production():
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:12])
 
-def DblClick(event):
+def DblClickLog(event):
     curItem = tree.focus()
     order = tree.item(curItem)['values'][0]
     desc = 0
@@ -60,8 +60,8 @@ def DblClick(event):
     style2.configure("Treeview", bd=2, font=('Calibri', 12))
     style2.map('Treeview', background=[('selected', 'firebrick')])
 
-    style2.configure("Treeview2.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-    tree2 = ttk.Treeview(frame2, columns=(0, 1, 2, 3, 4, 5), height=44, show="headings")
+    style2.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
+    tree2 = ttk.Treeview(frame2, columns=(0, 1, 2, 3, 4, 5), height=4, show="headings")
     tree2.pack(side='left')
 
     tree2.heading(0, text="Barcode")
@@ -87,7 +87,7 @@ def DblClick(event):
     root2.mainloop()
 
 #Bind keys
-root.bind("<Double-1>", DblClick)
+root.bind("<Double-1>", DblClickLog)
 
 
 def close_screen(e):
@@ -107,7 +107,7 @@ style.map('Treeview', background=[('selected', 'firebrick')])
 
 # Modify the font of the heading and select columns
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver' ,foreground='black')
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), height=30, show="headings")
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), height=43, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="Order No.", anchor=N)
@@ -183,12 +183,6 @@ def tkinter7():
         production()
 
 
-def tkinter8():
-    ret = os.system('python archive_order.py')
-    if ret:
-        production()
-
-
 btn = customtkinter.CTkButton(root, text="Close (Esc)", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='red', command=root.destroy).pack(side='right')
 
 mb =  Menubutton (root, text = "Scores", style='R.TButton' )
@@ -204,7 +198,6 @@ mb.menu.add_command (label = "Shipped", command = tkinter5)
 mb.pack()
 btn5 = customtkinter.CTkButton(root, text="Export", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter6).pack(side='right')
 btn6 = customtkinter.CTkButton(root, text="View Scores", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter7).pack(side='left')
-btn7 = customtkinter.CTkButton(root, text="Archive", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter8).pack(side='left')
 
 production()
 

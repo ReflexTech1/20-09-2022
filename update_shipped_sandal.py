@@ -25,7 +25,7 @@ with sqlite3.connect('Reflex Footwear.sql3') as conn:
     options.set(my_list[0])
 
 
-def update_despatch():
+def update_shipped_sandal():
     code = options.get()
     balance = Balance.get()
 
@@ -35,8 +35,9 @@ def update_despatch():
             'UPDATE SandalProduction SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
         cursor.execute(
             'UPDATE SandalProduction SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SandalProd_Balances SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
         cursor.execute(
-            'UPDATE SandalProduction SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+            'UPDATE SandalProduction SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Shipped) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
@@ -65,8 +66,14 @@ style.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
 
 # Inserting buttons
 submit1 = Button(root, text='Submit', style='S.TButton',
-                 width=11, command=update_despatch).place(x=20, y=190)
+                 width=11, command=update_shipped_sandal).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
+
+
+def submit_root(e):
+   command=update_shipped_sandal()
+
+root.bind('<Return>', lambda e: submit_root(e))
 
 root.mainloop()

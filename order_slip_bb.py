@@ -129,9 +129,9 @@ def bboys_slipper():
                        (qty, timestampStr, "BAG0002",))
         # Hanger Sticker
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size67, timestampStr, "STI0072",))
+                       (size12, timestampStr, "STI0072",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size89, timestampStr, "STI0074",))
+                       (size34, timestampStr, "STI0074",))
         # Hanger
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "HAN0001",))
@@ -139,6 +139,20 @@ def bboys_slipper():
         updated = cursor.rowcount
         conn.commit()
         cursor.close()
+
+    with sqlite3.connect('Log Sheets.sql3') as conn2:
+        cursor2 = conn2.cursor()
+        code = OrderNo.get()
+        barcode = OrderNo.get()
+        size12 = Size12.get()
+        size34 = Size34.get()
+        delivery = Delivery.get()
+        qty = Quantity.get()
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size1/2,Size3/4,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size1/2,Size3/4,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BABY BOYS SLIPPER", size12, size34, qty, 158])
+        updated = cursor2.rowcount
+        conn2.commit()
+        cursor2.close()
         root.destroy()
         sys.exit(updated)  # return value whether record has been updated
 

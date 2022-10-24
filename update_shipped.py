@@ -30,7 +30,7 @@ def submit_root(e):
 root.bind('<Return>', lambda e: submit_root(e))
 
 
-def update_despatch():
+def update_shipped():
     code = options.get()
     balance = Balance.get()
 
@@ -40,8 +40,9 @@ def update_despatch():
             'UPDATE Production SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
         cursor.execute(
             'UPDATE Production SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE Production_Balances SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
         cursor.execute(
-            'UPDATE Production SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+            'UPDATE Production SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Shipped) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
@@ -70,7 +71,7 @@ style.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
 
 # Inserting buttons
 submit1 = Button(root, text='Submit', style='S.TButton',
-                 width=11, command=update_despatch).place(x=20, y=190)
+                 width=11, command=update_shipped).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
 

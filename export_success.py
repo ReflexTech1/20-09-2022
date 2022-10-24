@@ -8,7 +8,7 @@ root.geometry('310x150')
 root.title("Export Status")
 
 root.config(bg="#4a7a8c")
-root.wm_attributes('-transparentcolor','#4a7a8c')
+# root.wm_attributes('-transparentcolor','#4a7a8c')
 
 style = ttk.Style()
 

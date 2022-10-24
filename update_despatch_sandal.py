@@ -38,6 +38,8 @@ def update_despatch_sandal():
         cursor = conn.cursor()
         cursor.execute('UPDATE SandalProduction SET Despatch=Despatch+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE SandalProduction SET Finishing=Finishing-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SandalProd_Balances SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SandalProd_Balances SET Finishing=Finishing-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Despatch) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
@@ -70,5 +72,11 @@ submit1 = Button(root, text='Submit', style='S.TButton',
                  width=11, command=update_despatch_sandal).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
+
+
+def submit_root(e):
+   command=order_b()
+
+root.bind('<Return>', lambda e: submit_root(e))
 
 root.mainloop()

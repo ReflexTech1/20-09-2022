@@ -32,6 +32,7 @@ def update_closing():
         cursor = conn.cursor()
         cursor.execute('UPDATE Production SET Closing=Closing-? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production SET Finishing=Finishing+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE Production_Balances SET Closing=Closing-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Closing) VALUES(?,?,?,?)', ["Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
         cursor.close()
@@ -62,5 +63,11 @@ submit1 = Button(root, text='Submit', style='S.TButton',
                  width=11, command=update_closing).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
+
+
+def submit_root(e):
+   command=update_closing()
+
+root.bind('<Return>', lambda e: submit_root(e))
 
 root.mainloop()

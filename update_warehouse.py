@@ -39,6 +39,7 @@ def update_warehouse():
         cursor = conn.cursor()
         cursor.execute('UPDATE Production SET Warehouse=Warehouse+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE Production_Balances SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code,])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Warehouse) VALUES(?,?,?,?)', ["Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
         cursor.close()

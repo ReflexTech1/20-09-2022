@@ -32,6 +32,7 @@ def update_clicking():
         cursor = conn.cursor()
         cursor.execute('UPDATE SandalProduction SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE SandalProduction SET Closing=Closing+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE SandalProd_Balances SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Clicking) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
@@ -64,5 +65,11 @@ submit1 = Button(root, text='Submit', style='S.TButton',
                  width=11, command=update_clicking).place(x=20, y=190)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=260, y=190)
+
+
+def submit_root(e):
+   command=update_clicking()
+
+root.bind('<Return>', lambda e: submit_root(e))
 
 root.mainloop()

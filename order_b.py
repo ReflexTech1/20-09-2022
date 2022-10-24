@@ -131,7 +131,7 @@ def order_b():
         size5 = Size5.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code) # ,[ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code)
         cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()

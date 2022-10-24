@@ -39,6 +39,7 @@ def update_clicking():
         cursor = conn.cursor()
         cursor.execute('UPDATE Production SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production SET Closing=Closing+? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE Production_Balances SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
         cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Clicking) VALUES(?,?,?,?)', [
                        "Reflex", timestampStr, code, balance])
         updated = cursor.rowcount
