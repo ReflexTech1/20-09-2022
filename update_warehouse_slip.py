@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 
 dateTimeObj = datetime.now()
-timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+timestampStr = dateTimeObj.strftime("%m-%d-%Y")
 
 root = Tk()
 root.geometry('380x250')

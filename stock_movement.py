@@ -18,10 +18,14 @@ def stock_movement():
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
         mycursor.execute(
-            "SELECT ItemCode,Quantity,ReceiveDate FROM StockRecord")
+            "SELECT ItemCode,Description,Quantity,ReceiveDate FROM StockRecord")
         for row in mycursor:
             tree.insert('', 'end', values=row[0:6])
 
+def close_stock():
+   command=root.destroy()
+
+root.bind('<Escape>', lambda e: close_stock())
 
 frame = Frame(root)
 frame.pack()
@@ -31,16 +35,18 @@ style = ttk.Style()
 style.configure("Treeview.Heading", font=("Arial Narrow", 18,
                                           'bold', 'underline'), foreground='black')  # 'antiquewhite4')
 
-tree = ttk.Treeview(frame, columns=(0, 1, 2), height=32, show="headings")
+tree = ttk.Treeview(frame, columns=(0, 1, 2, 3), height=32, show="headings")
 tree.pack(side='left')
 
-tree.heading(0, text="Description")
-tree.heading(1, text="Quantity")
-tree.heading(2, text="Date received")
+tree.heading(0, text="Item Code")
+tree.heading(1, text="Description")
+tree.heading(2, text="Quantity")
+tree.heading(3, text="Date received")
 
 tree.column(0, width=200)
-tree.column(1, width=200)
+tree.column(1, width=300)
 tree.column(2, width=200)
+tree.column(3, width=200)
 
 # Scrollbar Layout and Configuration
 scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)

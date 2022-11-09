@@ -5,7 +5,7 @@ import sys
 from datetime import datetime
 
 dateTimeObj = datetime.now()
-timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+timestampStr = dateTimeObj.strftime("%m-%d-%Y")
 
 root = Tk()
 root.geometry('380x250')
@@ -27,6 +27,7 @@ with sqlite3.connect('Reflex Footwear.sql3') as conn:
 def update_clicking():
     code = options.get()
     balance = Balance.get()
+    styles = Styles.get()
 
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()

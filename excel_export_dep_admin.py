@@ -3,6 +3,7 @@ import fnmatch
 import sqlite3
 import pandas as pd
 from datetime import datetime
+from admin_production_by_date_dep import department
 
 dateTimeObj = datetime.now()
 
@@ -51,7 +52,7 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
     create_dir(main_path)
 
     excel_path = os.path.join(
-        main_path, "Production Balances.xlsx") if excel_path == None else excel_path
+        main_path, "Production Scores Department(Admin).xlsx") if excel_path == None else excel_path
     csv_path = main_path if csv_path == None else csv_path
 
     db = sqlite3.connect(dbpath)
@@ -65,7 +66,18 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
         i = 0
         for table_name in tables:
             table_name = table_name[0]
-            table = pd.read_sql_query("SELECT * from Production_Balances ORDER BY DelDate ASC", db)
+            if department == 'Clicking':
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,Clicking from ProductionBreakdown" , db)
+            elif department == 'Closing':
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,Closing from ProductionBreakdown" , db)
+            elif department == 'Despatch':
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,Despatch from ProductionBreakdown" , db)
+            elif department == 'Warehouse':
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,Warehouse from ProductionBreakdown" , db)
+            elif department == 'ToShip':
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,ToShip from ProductionBreakdown" , db)
+            else:
+                table = pd.read_sql_query("SELECT Factory,Date,Order2,Shipped from ProductionBreakdown" , db)
             {cursor.description[i][0]: _ for i, _ in enumerate(zip(*cursor.fetchall()))
              if all(val is not None for val in _)}
             table.to_excel(writer, sheet_name=table_name, index=False)

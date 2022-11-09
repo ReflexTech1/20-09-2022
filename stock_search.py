@@ -15,7 +15,7 @@ Quantity = StringVar()
 with sqlite3.connect('Reflex Footwear.sql3') as conn:
     cursor = conn.cursor()
     my_data = cursor.execute(
-        "SELECT Description FROM StockSheet ORDER BY Category ASC")
+        "SELECT DISTINCT Description FROM StockSheet ORDER BY Category ASC")
     my_list = [r for r, in my_data]
     options = StringVar()
     options.set(my_list[0])
@@ -29,9 +29,9 @@ def stock_lookup():
         cursor.execute(
             'SELECT ItemCode,Description,Quantity,Unit FROM StockSheet WHERE Description=?', (code,))
         results = cursor.fetchall()
-        item_0_in_result1 = [_[1] for _ in results]
+        item_0_in_result1 = '\n'.join([x[1] for x in results])
         item_0_in_result2 = [_[2] for _ in results]
-        item_0_in_result3 = [_[3] for _ in results]
+        item_0_in_result3 = '\n'.join([x[3] for x in results])
         Label(root, text="Description:", width=20, background="lightgreen",
               font=("Arial, bold", 14)).place(x=40, y=160)
         Label(root, text=item_0_in_result1, width=40, background="lightgreen", font=(

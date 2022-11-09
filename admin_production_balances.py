@@ -19,11 +19,11 @@ def close_screen(e):
 root.bind('<Escape>', lambda e: close_screen(e))
 
 Departm = StringVar()
-departm = ("Department","Clicking", "Closing", "Despatch", "Warehouse", "Shipped")
+departm = ("Department","Department","Clicking", "Closing", "Despatch", "Warehouse", "To Ship", "Shipped")
 
 with sqlite3.connect('Reflex Footwear.sql3') as conn:
     cursor = conn.cursor()
-    my_data1 = cursor.execute("SELECT DISTINCT DelDate FROM Production_Balances")
+    my_data1 = cursor.execute("SELECT DISTINCT DelDate FROM Production_Balances ORDER BY DelDate ASC")
     my_list1 = [r for r, in my_data1]
     options1 = StringVar()
 
@@ -35,53 +35,70 @@ def del_date():
         mycursor = conn.cursor()
         mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM Production_Balances WHERE DelDate=?", (dates1,))
         for row in mycursor:
-            tree.insert('', 'end', values=row[0:8])
+            tree.insert('', 'end', values=row[0:10])
 
 
 def department():
-	dep = Departm.get()
-	clicking = 'Clicking'
-	closing = 'Closing'
-	desp = 'Despatch'
-	ware = 'Warehouse'
-	if dep == closing:
-		tree.delete(*tree.get_children())
-		with sqlite3.connect('Reflex Footwear.sql3') as conn:
-			mycursor = conn.cursor()
-			mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Closing FROM Production_Balances")
-			for row in mycursor:
-				tree.insert('', 'end', values=row[0:6])
-	elif dep == clicking:
-		tree.delete(*tree.get_children())
-		with sqlite3.connect('Reflex Footwear.sql3') as conn:
-			mycursor = conn.cursor()
-			mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking FROM Production_Balances")
-			for row in mycursor:
-				tree.insert('', 'end', values=row[0:6])
-	elif dep == desp:
-		tree.delete(*tree.get_children())
-		with sqlite3.connect('Reflex Footwear.sql3') as conn:
-			mycursor = conn.cursor()
-			mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Despatch FROM Production_Balances")
-			for row in mycursor:
-				tree.insert('', 'end', values=row[0:6])
-	else:
-		tree.delete(*tree.get_children())
-		with sqlite3.connect('Reflex Footwear.sql3') as conn:
-			mycursor = conn.cursor()
-			mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Warehouse FROM Production_Balances")
-			for row in mycursor:
-				tree.insert('', 'end', values=row[0:6])
-
+    dates1 = options1.get()
+    dep = Departm.get()
+    clicking = 'Clicking'
+    closing = 'Closing'
+    desp = 'Despatch'
+    ware = 'Warehouse'
+    toship = 'To Ship'
+    ship = 'Shipped'
+    tree.delete(*tree.get_children())
+    if dep == clicking:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Clicking FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3], row[4], row[5]))
+    elif dep == closing:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Closing FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3], row[4], "", row[5]))
+    elif dep == desp:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Despatch FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3], row[4], "", "", row[5]))
+    elif dep == ware:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Warehouse FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3],row[4], "", "", "", row[5]))
+    elif dep == toship:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,ToShip FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3], row[4], "", "", "", "", row[5]))
+    elif dep == ship:
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            mycursor = conn.cursor()
+            mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Shipped FROM Production_Balances ORDER BY DelDate ASC")
+            for row in mycursor:
+                tree.insert("",END, values=(row[1], row[2], row[3], row[4], "", "", "", "", "", row[5]))
+    else:
+       with sqlite3.connect('Reflex Footwear.sql3') as conn:
+           mycursor = conn.cursor()
+           mycursor.execute("SELECT Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Despatch,Warehouse,ToShip,Shipped FROM Production_Balances ORDER BY DelDate ASC")
+           for row in mycursor:
+               tree.insert('', 'end', values=row[1:11])
 
 # Information from Database
 def reflex_prod():
     tree.delete(*tree.get_children())
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM Production_Balances")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Despatch,Warehouse,ToShip,Shipped FROM Production_Balances ORDER BY DelDate ASC")
         for row in mycursor:
-            tree.insert('', 'end', values=row[0:])
+            tree.insert('', 'end', values=row[0:10])
 
 
 frame = Frame(root)
@@ -94,7 +111,7 @@ style.configure("Treeview", highlightthickness=0, bd=1, font=('Calibri', 11))
 # Modify the font of the heading
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), foreground='black')
 
-tree = ttk.Treeview(frame, columns=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+tree = ttk.Treeview(frame, columns=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9),
                     height=24, show="headings")
 tree.pack(side='left')
 
@@ -104,11 +121,10 @@ tree.heading(2, text="Delivery Date")
 tree.heading(3, text="Quantity")
 tree.heading(4, text="Clicking")
 tree.heading(5, text="Closing")
-tree.heading(6, text="Finishing")
-tree.heading(7, text="Despatch")
-tree.heading(8, text="Warehouse")
-tree.heading(9, text="To Ship")
-tree.heading(10, text="Shipped")
+tree.heading(6, text="Despatch")
+tree.heading(7, text="Warehouse")
+tree.heading(8, text="To Ship")
+tree.heading(9, text="Shipped")
 
 tree.column(0, width=150)
 tree.column(1, width=170)
@@ -120,7 +136,6 @@ tree.column(6, width=150)
 tree.column(7, width=150)
 tree.column(8, width=150)
 tree.column(9, width=150)
-tree.column(10, width=150)
 
 
 # Scrollbar Layout and Configuration

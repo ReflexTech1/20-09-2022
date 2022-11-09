@@ -306,7 +306,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip FROM Production ORDER BY DelDate ASC")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip FROM Production")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:12])
 
@@ -366,18 +366,12 @@ def tkinter6():
 
 
 def tkinter7():
-    ret = os.system('python production_breakdown.py')
+    ret = os.system('python admin_production_breakdown.py')
     if ret:
         production()
 
 
 def tkinter8():
-    ret = os.system('python admin_production_by_date_dep.py')
-    if ret:
-        production()
-
-
-def tkinter9():
     ret = os.system('python admin_production_balances.py')
     if ret:
         production()
@@ -389,9 +383,8 @@ def tkinter9():
 
 btn = Button(root, text='Close (Esc)', style='B.TButton', command=root.destroy).pack(side='right')
 btn5 = Button(root, text="Export", style='R.TButton', command=tkinter6).pack(side='right')
-btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')
-btn6 = Button(root, text="Filter Scores", style='R.TButton', command=tkinter8).pack(side='left')
-btn6 = Button(root, text="Balances", style='R.TButton', command=tkinter9).pack(side='left')
+btn6 = Button(root, text="Scores", style='R.TButton', command=tkinter7).pack(side='left')
+btn6 = Button(root, text="Balances", style='R.TButton', command=tkinter8).pack(side='left')
 
 production()
 

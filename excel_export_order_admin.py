@@ -51,7 +51,7 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
     create_dir(main_path)
 
     excel_path = os.path.join(
-        main_path, "Production Balances.xlsx") if excel_path == None else excel_path
+        main_path, "Production Scores By Date(Admin).xlsx") if excel_path == None else excel_path
     csv_path = main_path if csv_path == None else csv_path
 
     db = sqlite3.connect(dbpath)
@@ -59,13 +59,14 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
     tables = cursor.fetchone()
 
+
 # SELECT Table
     if (excels == True and csvs == True):
         writer = pd.ExcelWriter(excel_path, engine='xlsxwriter')
         i = 0
         for table_name in tables:
             table_name = table_name[0]
-            table = pd.read_sql_query("SELECT * from Production_Balances ORDER BY DelDate ASC", db)
+            table = pd.read_sql_query("SELECT Factory,Date,Order2,Clicking,Closing,Despatch,Warehouse,Shipped from ProductionBreakdown WHERE Order2=?" [order, db])
             {cursor.description[i][0]: _ for i, _ in enumerate(zip(*cursor.fetchall()))
              if all(val is not None for val in _)}
             table.to_excel(writer, sheet_name=table_name, index=False)

@@ -14,7 +14,7 @@ Quantity = StringVar()
 
 with sqlite3.connect('Reflex Footwear.sql3') as conn:
     cursor = conn.cursor()
-    my_data = cursor.execute("SELECT ItemCode FROM StockRecord")
+    my_data = cursor.execute("SELECT DISTINCT Description FROM StockRecord")
     my_list = [r for r, in my_data]
     options = StringVar()
     options.set(my_list[0])
@@ -26,7 +26,7 @@ def stock_lookup():
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()
         cursor.execute(
-            'SELECT DISTINCT ReceiveDate FROM StockRecord WHERE ItemCode=?', (code,))
+            'SELECT DISTINCT ReceiveDate FROM StockRecord WHERE Description=?', (code,))
         results = cursor.fetchall()
         item_0_in_result0 = [_[0] for _ in results]
         Label(root, text="Last Received", width=20, background="antiquewhite2", font=(
@@ -41,7 +41,7 @@ def stock_lookup():
 label_0 = Label(root, text="Search Last Received", width=18, background="antiquewhite2",
                 foreground="grey15", font=("Arial, bold", 20)).place(x=170, y=23)
 
-label_1 = Label(root, text="Item Code", width=20, background="antiquewhite2",
+label_1 = Label(root, text="Description", width=20, background="antiquewhite2",
                 foreground="grey15", font=("Arial, bold", 16)).place(x=120, y=90)
 
 # Changed Normal input to Option Menu

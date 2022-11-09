@@ -6,7 +6,7 @@ from datetime import datetime
 
 dateTimeObj = datetime.now()
 
-timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+timestampStr = dateTimeObj.strftime("%d-%b")
 
 # creates a directory without throwing an error
 
@@ -46,12 +46,12 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
     file_name = os.path.splitext(base_name)[0]  # firstname without .
     exten = os.path.splitext(base_name)[-1]  # .file_extension
 
-    internal_folder = "Production - " + timestampStr
+    internal_folder = "Stock Figures(" + timestampStr + ")"
     main_path = os.path.join(external_folder, internal_folder)
     create_dir(main_path)
 
     excel_path = os.path.join(
-        main_path, "Production Balances.xlsx") if excel_path == None else excel_path
+        main_path, "Soles Requirements.xlsx") if excel_path == None else excel_path
     csv_path = main_path if csv_path == None else csv_path
 
     db = sqlite3.connect(dbpath)
@@ -65,7 +65,7 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
         i = 0
         for table_name in tables:
             table_name = table_name[0]
-            table = pd.read_sql_query("SELECT * from Production_Balances ORDER BY DelDate ASC", db)
+            table = pd.read_sql_query("SELECT * from StockSheet WHERE Category='SOLES'", db)
             {cursor.description[i][0]: _ for i, _ in enumerate(zip(*cursor.fetchall()))
              if all(val is not None for val in _)}
             table.to_excel(writer, sheet_name=table_name, index=False)
