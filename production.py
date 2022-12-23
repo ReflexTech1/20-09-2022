@@ -386,6 +386,7 @@ def Shipped():
             cursor3.execute('UPDATE Production SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
             cursor3.execute('UPDATE Production SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
             cursor3.execute('UPDATE Production_Balances SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
+            cursor3.execute('UPDATE Production_Balances SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
             cursor3.execute('UPDATE Production SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code, ])
             cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Line,Order2,Style,Shipped,Reason) VALUES(?,?,?,?,?,?,?)', ["Reflex", timestampStr, line, code, desc, balance, reason])
             updated = cursor3.rowcount
@@ -522,7 +523,7 @@ def Confirm():
             cursor2.execute('DELETE FROM Planning WHERE OrderNo=?', [code])
             cursor2.execute('INSERT INTO ProdBreak_Archive SELECT * FROM ProductionBreakdown WHERE Order2=?', [code])
             cursor2.execute('DELETE FROM ProductionBreakdown WHERE Order2=?', [code])
-            cursor2.execute('INSERT INTO ProdBal_Archive SELECT * FROM ProductionBreakdown WHERE Order2=?', [code])
+            cursor2.execute('INSERT INTO ProdBal_Archive SELECT * FROM Production_Balances WHERE Order2=?', [code])
             cursor2.execute('DELETE FROM Production_Balances WHERE Order2=?', [code])
             updated = cursor2.rowcount
             cursor2.close()
@@ -553,7 +554,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM Production")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM Production ORDER BY DelDate ASC")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:12])
 

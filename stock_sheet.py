@@ -41,7 +41,7 @@ def stock_sheet():
     tree.delete(*tree.get_children())
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT * FROM StockSheet")
+        mycursor.execute("SELECT * FROM StockSheet ORDER BY Category ASC")
         for row in mycursor:
             tree.insert('', 'end', values=row[0:6])
 

@@ -49,6 +49,9 @@ def order_pbl():
         # Insert into Production
         cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE BOYS LEATHER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
+        # Insert into Production_Balances
+        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "PRE BOYS LEATHER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size9,Size10,Size11,Size12,Size13,Size1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE BOYS LEATHER", qty, delivery, size9, size10, size11, size12, size13, size1])
@@ -142,7 +145,6 @@ def order_pbl():
         cursor2 = conn2.cursor()
         code = OrderNo.get()
         barcode = OrderNo.get()
-        size8 = Size8.get()
         size9 = Size9.get()
         size10 = Size10.get()
         size11 = Size11.get()
@@ -151,8 +153,8 @@ def order_pbl():
         size1 = Size1.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE BOYS LEATHER", size8, size9, size10, size11, size12, size13, size1, qty, 158])
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE BOYS LEATHER", delivery, size9, size10, size11, size12, size13, size1, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()

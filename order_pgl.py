@@ -52,6 +52,9 @@ def order_pgl():
         # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size9,Size10,Size11,Size12,Size13,Size1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE GIRLS LEATHER", qty, delivery, size9, size10, size11, size12, size13, size1])
+        # Insert into Production_Balances
+        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "PRE GIRLS LEATHER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Required
         cursor.execute(r'INSERT INTO TBARequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Insole,Stiffener,Sock,Buckles,Foil,Gusset,Rivets,PBA887,IA80,Cartons,TBASize9,TBASize10,TBASize11,TBASize12,TBASize13,TBASize1)'
                        ' VALUES(?,?,?,?,?,?,?*1.1,?*(1.5/63),?*(1.45/75.5),?*(1.45/46),?*2,?*0.105,?*0.38,?*2,?*0.027,?*0.027,?/12,?,?,?,?,?,?)',
@@ -136,7 +139,6 @@ def order_pgl():
         cursor2 = conn2.cursor()
         code = OrderNo.get()
         barcode = OrderNo.get()
-        size8 = Size8.get()
         size9 = Size9.get()
         size10 = Size10.get()
         size11 = Size11.get()
@@ -146,7 +148,7 @@ def order_pgl():
         delivery = Delivery.get()
         qty = Quantity.get()
         cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE GIRLS LEATHER", size8, size9, size10, size11, size12, size13, size1, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE GIRLS LEATHER", size9, size10, size11, size12, size13, size1, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()

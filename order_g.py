@@ -45,7 +45,10 @@ def order_g():
         # Insert into Production
         cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "GIRLS SYNTHETIC", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
-        # Insert Into Planning
+        # Insert into Production_Balances
+        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "GIRLS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+                       # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5,Size6,Size7,Size8b) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "GIRLS SYNTHETIC", qty, delivery, size2, size3, size4, size5, size6, size7, size8b])
         # Insert Into Required

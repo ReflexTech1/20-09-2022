@@ -22,26 +22,6 @@ timestampStr = dateTimeObj.strftime("%d-%b-%Y")
 
 with sqlite3.connect('Reflex Footwear.sql3') as conn:
     cursor = conn.cursor()
-    material_data = cursor.execute("SELECT Description FROM StockSheet WHERE Category=?", ("STOKIEM",))
-    upper_list = [r for r, in material_data]
-    upper = StringVar()
-    upper.set(upper_list[0])
-
-    sockm_data = cursor.execute("SELECT Description FROM StockSheet WHERE Category=?", ("STOKIEM",))
-    sockm_list = [r for r, in sockm_data]
-    sockm = StringVar()
-    sockm.set(sockm_list[0])
-
-    binding_data = cursor.execute("SELECT Description FROM StockSheet WHERE Description LIKE '%16mm%'")
-    binding_list = [r for r, in binding_data]
-    binding = StringVar()
-    binding.set(binding_list[0])
-
-    elastic_data = cursor.execute("SELECT Description FROM StockSheet WHERE Category=?", ("ELASTIC",))
-    elastic_list = [r for r, in elastic_data]
-    elastic = StringVar()
-    elastic.set(elastic_list[0])
-
     soles1_data = cursor.execute("SELECT Description FROM StockSheet WHERE Description LIKE '%ML Soles Boys%%Size 2/3%'")
     soles1_list = [r for r, in soles1_data]
     soles1 = StringVar()
@@ -63,10 +43,6 @@ def boys_slipper():
     code = OrderNo.get()
     size23 = Size23.get()
     size45 = Size45.get()
-    bind = binding.get()
-    elast = elastic.get()
-    material = upper.get()
-    sock = sockm.get()
     sole1 = soles1.get()
     sole2 = soles2.get()
     delivery = Delivery.get()
@@ -75,11 +51,14 @@ def boys_slipper():
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()
         # Insert into Orders
-        cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Binding,Elastic,Material,Sock,Soles23,Soles45) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS SLIPPER", delivery, qty, qty, bind, elast, material, sock, size23, size45])
+        cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,Soles23,Soles45) VALUES(?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "BOYS SLIPPER", delivery, qty, qty, size23, size45])
         # Insert into Production
         cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "BOYS SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty])
+        # Insert into Production_Balances
+        cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "BOYS SLIPPER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size23,Size45) VALUES(?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "BOYS SLIPPER", qty, delivery, size23, size45])
@@ -87,15 +66,6 @@ def boys_slipper():
         cursor.execute(r'INSERT INTO SlipRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Sock,Ribbon,Elastic,Binding,Gusset,Cartons,MLSize2x3,MLSize4x5)'
                        ' VALUES(?,?,?,?,?,?,?*(1.45/16.5),?*(1.45/29),?*(0.075),?*(0.95),?*(1.3),?*(0.16),?/36,?,?)',
                        ["Reflex", timestampStr, code, "BOYS SLIPPER", qty, delivery, qty, qty, qty, qty, qty, qty, qty, size23, size45])
-        # Upper Material
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.45/16.5), LastRec=? WHERE Description=?', (qty, timestampStr, material))
-        # Binding
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.3), LastRec=? WHERE Description=?', (qty, timestampStr, bind))
-        # Elastic
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.95), LastRec=? WHERE Description=?', (qty, timestampStr, elast))
-        # Sock Material
-        cursor.execute(
-            r'UPDATE StockSheet SET Quantity=Quantity-?*(1.45/29), LastRec=? WHERE Description=?', (qty, timestampStr, sock))
         # 3mm Ribbon
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.075), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "RIB0001",))
         # Soles
@@ -130,8 +100,8 @@ def boys_slipper():
         size45 = Size45.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2/3,Size4/5,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2/3,Size4/5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SLIPPER", size23, size45, qty, 158])
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size23,Size45,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size23,Size45,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SLIPPER", delivery, size23, size45, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()
@@ -155,18 +125,6 @@ entry_b2 = Entry(root, textvar=Size45, background="", font=("bold", 10)).place(x
 
 label_b3 = Label(root, text="Total Quantity:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=240)
 entry_b3 = Entry(root, textvar=Quantity, background="", font=("bold", 10)).place(x=140, y=240)
-
-label_b4 = Label(root, text="Binding:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=270)
-option_upper = OptionMenu(root, binding, *binding_list).place(x=140, y=270)
-
-label_b5 = Label(root, text="Elastic:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=300)
-option_upper = OptionMenu(root, elastic, *elastic_list).place(x=140, y=300)
-
-label_b6 = Label(root, text="1-Tone Upper:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=20, y=330)
-option_upper = OptionMenu(root, upper, *upper_list).place(x=140, y=330)
-
-label_b7 = Label(root, text="Sock:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=20, y=360)
-option_upper = OptionMenu(root, sockm, *sockm_list).place(x=140, y=360)
 
 label_b8 = Label(root, text="Soles:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=300, y=180)
 option_soles = OptionMenu(root, soles1, *soles1_list).place(x=360, y=180)

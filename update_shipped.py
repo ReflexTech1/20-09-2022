@@ -52,6 +52,7 @@ def update_shipped():
         cursor.execute('UPDATE Production SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production_Balances SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
+        cursor.execute('UPDATE Production_Balances SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE Production SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code, ])
         cursor.execute('INSERT INTO ProductionBreakdown (Factory,Date,Line,Order2,Style,Shipped,Reason) VALUES(?,?,?,?,?,?,?)', ["Reflex", timestampStr, line, code, desc, balance, reason])
         updated = cursor.rowcount
