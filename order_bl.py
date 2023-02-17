@@ -22,7 +22,7 @@ dateTimeObj = datetime.now()
 timestampStr = dateTimeObj.strftime("%d-%b-%Y")
 
 
-def order_b():
+def order_bl():
     code = OrderNo.get()
     size2 = Size2.get()
     size3 = Size3.get()
@@ -188,7 +188,7 @@ style.configure('S.TButton', font=('Arial', 12, 'bold'),
 
 # Inserting buttons
 submit1 = Button(root, text='Submit', style='S.TButton',
-                 width=11, command=order_b).place(x=20, y=420)
+                 width=11, command=order_bl).place(x=20, y=420)
 exit1 = Button(root, text='Close', style='C.TButton', width=11,
                command=root.destroy).place(x=220, y=420)
 

@@ -405,7 +405,7 @@ def Shipped():
 
     label_0 = Label(root3, text="Shipped Quantity", background="lightblue2", width=20, font=("Arial", 20, "bold"))
     label_0.place(x=100, y=23)
-    label_2 = Label(root3, text="Truck Reg.", width=20, background="lightblue2", font=("Arial", 12, "bold"))
+    label_2 = Label(root3, text=r"Invoice No.", width=20, background="lightblue2", font=("Arial", 12, "bold"))
     label_2.place(x=20, y=100)
     entry_2 = Entry(root3, textvar=Line, background="lightblue2", font=("Arial", 12, "bold"))
     entry_2.place(x=180, y=100)
@@ -415,7 +415,7 @@ def Shipped():
     entry_3 = Entry(root3, textvar=Balance, background="lightblue2", font=("Arial", 12, "bold"))
     entry_3.place(x=180, y=140)
 
-    label_4 = Label(root3, text="Reason", width=20, background="lightblue2", font=("Arial", 12, "bold"))
+    label_4 = Label(root3, text=r"Truck Reg.", width=20, background="lightblue2", font=("Arial", 12, "bold"))
     label_4.place(x=20, y=180)
     entry_4 = Entry(root3, textvar=Reason, background="lightblue2", font=("Arial", 12, "bold"))
     entry_4.place(x=180, y=180)

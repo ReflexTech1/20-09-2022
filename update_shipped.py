@@ -74,7 +74,7 @@ label_1 = Label(root, text="Style", width=20, background="lightblue1", font=("Ar
 option_1 = OptionMenu(root, options2, *my_list2).place(x=180, y=140)
 
 #line
-label_2 = Label(root, text="Truck Reg.", width=20, background="lightblue1", font=("Arial", 12, "bold")).place(x=20, y=180)
+label_2 = Label(root, text=r"Invoice No.", width=20, background="lightblue1", font=("Arial", 12, "bold")).place(x=20, y=180)
 option_2 = Entry(root, textvar=Line, background="lightblue1", font=("Arial", 12, "bold")).place(x=180, y=180)
 
 #Quantity
@@ -82,7 +82,7 @@ label_3 = Label(root, text="Score Quantity", width=20, background="lightblue1", 
 entry_3 = Entry(root, textvar=Balance, background="lightblue1", font=("Arial", 12, "bold")).place(x=180, y=220)
 
 #Reason
-label_4 = Label(root, text="Reason", width=20, background="lightblue1", font=("Arial", 12, "bold")).place(x=20, y=260)
+label_4 = Label(root, text=r"Truck Reg.", width=20, background="lightblue1", font=("Arial", 12, "bold")).place(x=20, y=260)
 entry_4 = Entry(root, textvar=Reason, background="lightblue1", font=("Arial", 12, "bold")).place(x=180, y=260)
 
 # Style of buttons

@@ -556,7 +556,7 @@ def production():
         mycursor = conn.cursor()
         mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM SlipProduction ORDER BY DelDate ASC")
         for row in mycursor:
-                tree.insert('', 'end',values=row[0:12])
+                tree.insert('', 'end',values=row[0:13])
 
 root.after(1000, production)
 

@@ -4,6 +4,7 @@ import os
 from tkinter import *
 from tkinter import messagebox
 from datetime import datetime
+from tkcalendar import Calendar
 
 dateTimeObj = datetime.now()
 
@@ -19,7 +20,7 @@ def export_to_excel():
     variable2 = input2.get()
 
     # Execute the query and pass the variables
-    data = r"SELECT Date,Line,Order2,Style,Despatch FROM ProductionBreakdown WHERE Date BETWEEN ? AND ? UNION SELECT Date,Line,Order2,Style,Despatch FROM ProdBreak_Archive WHERE Date BETWEEN ? AND ?"
+    data = r"SELECT * FROM ProductionBreakdown WHERE Order2 BETWEEN ? AND ? UNION SELECT * FROM ProdBreak_Archive WHERE Order2 BETWEEN ? AND ?"
     cursor.execute(data, (variable1,variable2,variable1,variable2))
 
     # Fetch the data
@@ -31,7 +32,7 @@ def export_to_excel():
     conn.close()
 
     # Get the directory of the database
-    db_dir = os.path.dirname(os.path.abspath("C:\RSoft\Current\Reflex Footweear.sql3"))
+    db_dir = os.path.dirname(os.path.abspath("C:\RSoft\To be edited\Reflex Footweear.sql3"))
 
     # Create the folder directory where you want to save the file
     folder_dir = os.path.join(db_dir, "Fortnightly Scores")
@@ -42,15 +43,21 @@ def export_to_excel():
     data = pd.DataFrame(data)
 
     # Export the data to an Excel file
-    data.to_excel(os.path.join(folder_dir, "Fortnightly Scores " + variable1 + " - " + variable2 + ".xlsx"), index=False)
+    data.to_excel(os.path.join(folder_dir, "Fortnightly Scores"+timestampStr+".xlsx"), index=False)
     messagebox.showinfo("Success", "Data exported to excel successfully")
 
 # Create the main window
 root = Tk()
-root.geometry('600x250')
+root.geometry('600x400')
 root.title("Export Fortnight")
 root.config(bg="lightblue2")
 
+cale = Calendar(root,selectmode = "day",year=2022,month=1,date=1)
+
+def fetch_date():
+    date.config(text = "Current month:" + cale.get_date())
+
+date = Label(root,text="",bg='black',fg='white')
 
 # Create the input fields for the variables
 input1 = Entry(root)
@@ -76,7 +83,7 @@ input2 = Entry(root, textvar=input2, width=20,background="lightblue2", font=("Ar
 # Pack the widgets
 label1.place(x=40, y=40)
 input1.place(x=40, y=80)
-
+cale.place(x=200, y=200)
 label_des.place(x=270, y= 40)
 
 label2.place(x=350, y=40)

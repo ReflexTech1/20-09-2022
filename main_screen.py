@@ -114,6 +114,12 @@ def tkinter_ex5():
         exit()
 
 
+def tkinter_ex6():
+    ret = os.system('python excel_export_Fortnight.py')
+    if ret:
+        exit()
+
+
 def tkinter_arch():
     ret = os.system('python archive_view_orders.py')
     if ret:
@@ -189,6 +195,7 @@ mb4.menu.add_command (label = "Production Tracker", command = tkinter_ex2)
 mb4.menu.add_command (label = "Production Scores", command = tkinter_ex3)
 mb4.menu.add_command (label = "Inventory List", command = tkinter_ex4)
 mb4.menu.add_command (label = "Size Range", command = tkinter_ex5)
+mb4.menu.add_command (label = "Fortnightly Scores", command = tkinter_ex6)
 
 b3 = Button(master, image=img5, command=tkinter_stock)
 b4 = Button(master, image=img6, command=tkinter_log)
