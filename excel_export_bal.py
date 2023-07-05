@@ -7,18 +7,17 @@ from datetime import datetime
 dateTimeObj = datetime.now()
 
 timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+today = datetime.now().strftime("%m-%d-%Y")
+
 
 # creates a directory without throwing an error
-
-
 def create_dir(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
     return dir
 
+
 # finds files in a directory corresponding to a regex query
-
-
 def find(pattern, path):
     result = []
     for root, dirs, files in os.walk(path):
@@ -65,7 +64,7 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
         i = 0
         for table_name in tables:
             table_name = table_name[0]
-            table = pd.read_sql_query("SELECT * from ProductionBreakdown", db)
+            table = pd.read_sql_query(f"SELECT Date,Line,Order2,Style,Clicking,Closing,Despatch,Shipped,Reason FROM ProductionBreakdown WHERE Date = '{today}'", db)
             {cursor.description[i][0]: _ for i, _ in enumerate(zip(*cursor.fetchall()))
              if all(val is not None for val in _)}
             table.to_excel(writer, sheet_name=table_name, index=False)

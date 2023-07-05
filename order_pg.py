@@ -11,6 +11,7 @@ root.config(bg="lightskyblue3")
 style = ttk.Style()
 
 OrderNo = StringVar()
+Size7 = IntVar()
 Size8 = IntVar()
 Size9 = IntVar()
 Size10 = IntVar()
@@ -33,6 +34,7 @@ root.bind('<Return>', lambda e: submit_root(e))
 
 def order_pg():
     code = OrderNo.get()
+    size7 = Size7.get()
     size8 = Size8.get()
     size9 = Size9.get()
     size10 = Size10.get()
@@ -55,12 +57,12 @@ def order_pg():
         cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Planning
-        cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", qty, delivery, size8, size9, size10, size11, size12, size13, size1])
+        cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size7,Size8,Size9,Size10,Size11,Size12,Size13,Size1) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", qty, delivery, size7, size8, size9, size10, size11, size12, size13, size1])
         # Insert Into Required
-        cursor.execute(r'INSERT INTO TBARequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Buckles,Foil,Gusset,Rivets,PBA887,IA80,Cartons,TBASize8,TBASize9,TBASize10,TBASize11,TBASize12,TBASize13,TBASize1)'
-                       ' VALUES(?,?,?,?,?,?,?*(1.395/14),?*(1.5/63),?*(1.45/75.5),?*(1.45/46),?*2,?*0.105,?*0.38,?*2,?*0.027,?*0.027,?/12,?,?,?,?,?,?,?)',
-                       ["Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size8, size9, size10, size11, size12, size13, size1])
+        cursor.execute(r'INSERT INTO TBARequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Buckles,Foil,Gusset,Rivets,PBA887,IA80,Cartons,TBASize7,TBASize8,TBASize9,TBASize10,TBASize11,TBASize12,TBASize13,TBASize1)'
+                       ' VALUES(?,?,?,?,?,?,?*(1.395/14),?*(1.5/63),?*(1.45/75.5),?*(1.45/46),?*2,?*0.105,?*0.38,?*2,?*0.027,?*0.027,?/12,?,?,?,?,?,?,?,?)',
+                       ["Reflex", timestampStr, code, "PRE GIRLS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size7, size8, size9, size10, size11, size12, size13, size1])
         # Upper Material
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.395/14), LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "SCH0001",))
@@ -97,6 +99,8 @@ def order_pg():
                        (size13, timestampStr, "TBA0006",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (size1, timestampStr, "TBA0007",))
+        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                       (size7, timestampStr, "TBA0008",))
         # Rivets
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*6, LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "RIV0001",))
@@ -145,6 +149,7 @@ def order_pg():
         cursor2 = conn2.cursor()
         code = OrderNo.get()
         barcode = OrderNo.get()
+        size7 = Size7.get()
         size8 = Size8.get()
         size9 = Size9.get()
         size10 = Size10.get()
@@ -154,7 +159,7 @@ def order_pg():
         size1 = Size1.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket)' %code)
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size7,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket)' %code)
         cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE GIRLS SYNTHETIC", delivery, size8, size9, size10, size11, size12, size13, size1, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
@@ -176,45 +181,50 @@ label_2 = Label(root, text="Delivery Date:", width=20,
 entry_2 = Entry(root, textvar=Delivery, background="yellow",
                 font=("bold", 10)).place(x=160, y=120)
 
-label_pb8 = Label(root, text="Size 8:", width=20,
+label_pb7 = Label(root, text="Size 7:", width=20,
                   background="lightskyblue3", font=("bold", 11)).place(x=40, y=180)
-entry_pb8 = Entry(root, textvar=Size8, background="yellow",
+entry_pb7 = Entry(root, textvar=Size7, background="yellow",
                   font=("bold", 10)).place(x=160, y=180)
 
-label_pb9 = Label(root, text="Size 9:", width=20,
+label_pb8 = Label(root, text="Size 8:", width=20,
                   background="lightskyblue3", font=("bold", 11)).place(x=40, y=210)
-entry_pb9 = Entry(root, textvar=Size9, background="yellow",
+entry_pb8 = Entry(root, textvar=Size8, background="yellow",
                   font=("bold", 10)).place(x=160, y=210)
 
-label_pb10 = Label(root, text="Size 10:", width=20,
-                   background="lightskyblue3", font=("bold", 11)).place(x=40, y=240)
-entry_pb10 = Entry(root, textvar=Size10, background="yellow",
-                   font=("bold", 10)).place(x=160, y=240)
+label_pb9 = Label(root, text="Size 9:", width=20,
+                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=240)
+entry_pb9 = Entry(root, textvar=Size9, background="yellow",
+                  font=("bold", 10)).place(x=160, y=240)
 
-label_pb11 = Label(root, text="Size 11:", width=20,
+label_pb10 = Label(root, text="Size 10:", width=20,
                    background="lightskyblue3", font=("bold", 11)).place(x=40, y=270)
-entry_pb11 = Entry(root, textvar=Size11, background="yellow",
+entry_pb10 = Entry(root, textvar=Size10, background="yellow",
                    font=("bold", 10)).place(x=160, y=270)
 
-label_pb12 = Label(root, text="Size 12:", width=20,
+label_pb11 = Label(root, text="Size 11:", width=20,
                    background="lightskyblue3", font=("bold", 11)).place(x=40, y=300)
-entry_pb12 = Entry(root, textvar=Size12, background="yellow",
+entry_pb11 = Entry(root, textvar=Size11, background="yellow",
                    font=("bold", 10)).place(x=160, y=300)
 
-label_pb13 = Label(root, text="Size 13:", width=20,
+label_pb12 = Label(root, text="Size 12:", width=20,
                    background="lightskyblue3", font=("bold", 11)).place(x=40, y=330)
-entry_pb13 = Entry(root, textvar=Size13, background="yellow",
+entry_pb12 = Entry(root, textvar=Size12, background="yellow",
                    font=("bold", 10)).place(x=160, y=330)
 
+label_pb13 = Label(root, text="Size 13:", width=20,
+                   background="lightskyblue3", font=("bold", 11)).place(x=40, y=360)
+entry_pb13 = Entry(root, textvar=Size13, background="yellow",
+                   font=("bold", 10)).place(x=160, y=360)
+
 label_pb1 = Label(root, text="Size 1:", width=20,
-                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=360)
+                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=390)
 entry_pb1 = Entry(root, textvar=Size1, background="yellow",
-                  font=("bold", 10)).place(x=160, y=360)
+                  font=("bold", 10)).place(x=160, y=390)
 
 label_qty = Label(root, text="Total Quantity:", width=20,
-                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=420)
+                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=450)
 entry_qty = Entry(root, textvar=Quantity, background="yellow",
-                  font=("bold", 10)).place(x=160, y=420)
+                  font=("bold", 10)).place(x=160, y=450)
 
 # Style of buttons
 style.configure('C.TButton', font=('Arial', 12, 'bold'),

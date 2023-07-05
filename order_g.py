@@ -49,7 +49,7 @@ def order_g():
         cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "GIRLS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
                        # Insert Into Planning
-        cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5,Size6,Size7,Size8b) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+        cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5,Size6,Size7b,Size8b) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "GIRLS SYNTHETIC", qty, delivery, size2, size3, size4, size5, size6, size7, size8b])
         # Insert Into Required
         cursor.execute(r'INSERT INTO TBARequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Buckles,Foil,Gusset,Rivets,PBA887,IA80,Cartons,TBASize2,TBASize3,TBASize4,TBASize5,TBASize6,TBASize7,TBASize8b)'
@@ -148,8 +148,8 @@ def order_g():
         size8 = Size5.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Size6,Size7,Size8,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Size6,Size7,Size8,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "GIRLS SYNTHETIC", delivery, size2, size3, size4, size5, size6, size7, size8, qty, 158])
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Size6,Size7b,Size8b,Qty,Ticket)' %code)
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Size6,Size7b,Size8b,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "GIRLS SYNTHETIC", delivery, size2, size3, size4, size5, size6, size7, size8, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()
