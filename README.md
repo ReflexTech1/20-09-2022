@@ -12,4 +12,4 @@ This software would rely mostly on physical input.
 
 This input method could be altered to accommodate more accurate tracking at a later stage.
 
-Software created by Ryan McCabe.
+Software created by Ryan.

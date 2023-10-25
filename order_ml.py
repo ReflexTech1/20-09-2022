@@ -152,7 +152,7 @@ def order_ml():
         size10b = Size10b.get()
         delivery = Delivery.get()
         qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket)' %code)
+        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7b,Size8,Size9,Size10,Qty,Ticket)' %code)
         cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS LEATHER", delivery, size6, size7, size8b, size9b, size10b, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
