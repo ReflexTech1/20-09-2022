@@ -32,7 +32,7 @@ def update_time():
 
 def orders():
     tree.delete(*tree.get_children())
-    with sqlite3.connect('Reflex Footwear.sql3') as conn:
+    with sqlite3.connect('C:\RSoft\Current\Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
         mycursor.execute("SELECT OrderNo,Style,DeliveryDate,Quantity FROM MyShoe ORDER BY DeliveryDate ASC")
         for row in mycursor:

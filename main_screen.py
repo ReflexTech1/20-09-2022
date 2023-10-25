@@ -13,7 +13,7 @@ l1.grid(row=0, column=0, columnspan=7, ipadx=30, pady=10, ipady=5, sticky=N)
 
 
 def tkinter1():
-    ret = os.system(r'python orders.py')
+    ret = os.system(r'python C:\RSoft\Current\Main\NewOrders\orders.py')
     if ret:
         exit()
 
@@ -115,7 +115,13 @@ def tkinter_ex5():
 
 
 def tkinter_ex6():
-    ret = os.system('python excel_export_Fortnight.py')
+    ret = os.system('python excel_export_fortnight.py')
+    if ret:
+        exit()
+
+
+def tkinter_ex7():
+    ret = os.system('python excel_export_orderno.py')
     if ret:
         exit()
 
@@ -196,6 +202,7 @@ mb4.menu.add_command (label = "Production Scores", command = tkinter_ex3)
 mb4.menu.add_command (label = "Inventory List", command = tkinter_ex4)
 mb4.menu.add_command (label = "Size Range", command = tkinter_ex5)
 mb4.menu.add_command (label = "Fortnightly Scores", command = tkinter_ex6)
+mb4.menu.add_command (label = "Production of O/N", command = tkinter_ex7)
 
 b3 = Button(master, image=img5, command=tkinter_stock)
 b4 = Button(master, image=img6, command=tkinter_log)

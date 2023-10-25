@@ -148,7 +148,7 @@ def order_pgl():
         delivery = Delivery.get()
         qty = Quantity.get()
         cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size8,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE GIRLS LEATHER", delivery, size9, size10, size11, size12, size13, size1, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size9,Size10,Size11,Size12,Size13,Size1,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "PRE GIRLS LEATHER", delivery, size9, size10, size11, size12, size13, size1, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()

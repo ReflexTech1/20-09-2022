@@ -18,6 +18,15 @@ Balance = StringVar()
 
 with sqlite3.connect('Reflex Footwear.sql3') as conn:
     cursor = conn.cursor()
+    my_data2 = cursor.execute(
+        "SELECT DISTINCT Style FROM PlanSandal")
+    my_list2 = [r for r, in my_data2]
+    options2 = StringVar()
+    options2.set(my_list2[0])
+
+
+with sqlite3.connect('Reflex Footwear.sql3') as conn:
+    cursor = conn.cursor()
     my_data = cursor.execute( "SELECT OrderNo FROM PlanSandal ORDER BY OrderNo ASC")
     my_list = [r for r, in my_data]
     options = StringVar()
@@ -27,15 +36,15 @@ with sqlite3.connect('Reflex Footwear.sql3') as conn:
 def update_clicking():
     code = options.get()
     balance = Balance.get()
-    styles = Styles.get()
+    style = options2.get()
 
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()
         cursor.execute('UPDATE SandalProduction SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE SandalProduction SET Closing=Closing+? WHERE Order2=?', [balance, code, ])
         cursor.execute('UPDATE SandalProd_Balances SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
-        cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Clicking) VALUES(?,?,?,?)', [
-                       "Reflex", timestampStr, code, balance])
+        cursor.execute(r'INSERT INTO ProductionBreakdown (Factory,Date,Order2,Style,Clicking) VALUES(?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, style,balance])
         updated = cursor.rowcount
         cursor.close()
         conn.commit()

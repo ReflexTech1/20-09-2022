@@ -165,7 +165,7 @@ def young_boys_sandal():
         delivery = Delivery.get()
         qty = Quantity.get()
         cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size3,Size4,Size5,Size6,Size7,Size8,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size3,Size4,Size5,Size6,Size7,Size8,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "YOUNGER BOYS SANDAL", size3, size4, size5, size6, size7, size8, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size3,Size4,Size5,Size6,Size7,Size8,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "YOUNGER BOYS SANDAL", delivery, size3, size4, size5, size6, size7, size8, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()
@@ -199,13 +199,13 @@ entry_yb3 = Entry(root, textvar=Size7, background="", font=("bold", 10)).place(x
 label_yb3 = Label(root, text="Size 8:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=330)
 entry_yb3 = Entry(root, textvar=Size8, background="", font=("bold", 10)).place(x=160, y=330)
 
-label_yb4 = Label(root, text="Total Quantity:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=390)
-entry_yb4 = Entry(root, textvar=Quantity, background="", font=("bold", 10)).place(x=160, y=390)
+label_yb4 = Label(root, text="Total Quantity:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=360)
+entry_yb4 = Entry(root, textvar=Quantity, background="", font=("bold", 10)).place(x=160, y=360)
 
 label_yb5 = Label(root, text="Binding:", width=30, background="lightskyblue3", font=("bold", 11)).place(x=20, y=420)
 option_upper = OptionMenu(root, binding, *binding_list).place(x=160, y=420)
 
-label_yb7 = Label(root, text="1-Tone Upper:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=20, y=450)
+label_yb7 = Label(root, text="Upper:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=20, y=450)
 option_upper = OptionMenu(root, upper, *upper_list).place(x=160, y=450)
 
 label_yb8 = Label(root, text="Sock:", width=20, background="lightskyblue3", font=("bold", 11)).place(x=20, y=480)
