@@ -43,7 +43,7 @@ def DblClick(event):
     if order is not None:
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProduction WHERE Order2=?', (order,))
+            cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProduction WHERE Order2=?', (order,))
             results = cursor.fetchall()
 
             item_0_in_result = [_[0] for _ in results] # Factory
@@ -52,12 +52,13 @@ def DblClick(event):
             result_as_text3 = '\n'.join([x[3] for x in results]) # Style
             item_0_in_result4 = [_[4] for _ in results] # Delivery date
             item_0_in_result5 = [_[5] for _ in results] # Quantity
-            item_0_in_result6 = [_[6] for _ in results] # Clicking
-            item_0_in_result7 = [_[7] for _ in results] # Closing
-            item_0_in_result8 = [_[8] for _ in results] # Finishing
-            item_0_in_result9 = [_[9] for _ in results] # Despatch
-            item_0_in_result10 = [_[10] for _ in results] # To Ship
-            item_0_in_result11 = [_[11] for _ in results] # Shipped
+            item_0_in_result6 = [_[6] for _ in results] # Cutting
+            item_0_in_result7 = [_[7] for _ in results] # Assembly
+            item_0_in_result8 = [_[8] for _ in results] # Closing
+            item_0_in_result9 = [_[9] for _ in results] # Finishing
+            item_0_in_result10 = [_[10] for _ in results] # Despatch
+            item_0_in_result11 = [_[11] for _ in results] # To Ship
+            item_0_in_result12 = [_[12] for _ in results] # Shipped
 
 
             Label(root2, text="Planned:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=40, y=150)
@@ -75,23 +76,26 @@ def DblClick(event):
             Label(root2, text="Order Quantity:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=40, y=350)
             Label(root2, text=item_0_in_result5, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=250, y=350)
 
-            Label(root2, text="Balance To Click:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=150)
+            Label(root2, text="Balance To Cut:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=150)
             Label(root2, text=item_0_in_result6, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=150)
-
-            Label(root2, text="In Closing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=200)
+            
+            Label(root2, text="In Assembly:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=200)
             Label(root2, text=item_0_in_result7, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=200)
 
-            Label(root2, text="In Finishing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=250)
+            Label(root2, text="In Closing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=250)
             Label(root2, text=item_0_in_result8, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=250)
 
-            Label(root2, text="In Despatch:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=300)
+            Label(root2, text="In Finishing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=300)
             Label(root2, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=300)
 
-            Label(root2, text="Balance To Ship:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
+            Label(root2, text="In Despatch:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
             Label(root2, text=item_0_in_result10, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
 
-            Label(root2, text="Shipped:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=400)
+            Label(root2, text="Balance To Ship:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=400)
             Label(root2, text=item_0_in_result11, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=400)
+
+            Label(root2, text="Shipped:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=450)
+            Label(root2, text=item_0_in_result12, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=450)
 
             cursor.close()
 
@@ -102,7 +106,7 @@ def production():
     tree.delete(*tree.get_children())
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip FROM SandalProduction ORDER BY Order2 ASC")
+        mycursor.execute("SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip FROM SandalProduction ORDER BY Order2 ASC")
         for row in mycursor:
             tree.insert('', 'end', values=row[2:11])
 
@@ -120,18 +124,19 @@ style.map('Treeview', background=[('selected', 'firebrick')])
 
 # Modify the font of the heading and select columns
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9), height=44, show="headings")
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), height=44, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="Order No.")
 tree.heading(2, text="Style/Description")
 tree.heading(3, text="Delivery Date")
 tree.heading(4, text="Quantity")
-tree.heading(5, text="Clicking")
-tree.heading(6, text="Closing")
-tree.heading(7, text="Finishing")
-tree.heading(8, text="Despatch")
-tree.heading(9, text="To Ship")
+tree.heading(5, text="Cutting")
+tree.heading(6, text="Assembly")
+tree.heading(7, text="Closing")
+tree.heading(8, text="Finishing")
+tree.heading(9, text="Despatch")
+tree.heading(10, text="To Ship")
 
 tree.column(1, width=160)
 tree.column(2, width=230)
@@ -141,6 +146,7 @@ tree.column(5, width=160)
 tree.column(6, width=160)
 tree.column(7, width=160)
 tree.column(8, width=160)
+tree.column(9, width=160)
 tree.column(9, width=160)
 
 scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
@@ -154,7 +160,13 @@ style.configure('B.TButton', font=('Calibri', 14, 'bold', 'underline'), foregrou
 
 
 def tkinter1():
-    ret = os.system('python update_clicking_sandal.py')
+    ret = os.system('python update_cutting_sandal.py')
+    if ret:
+        production()
+
+
+def tkinter1_b():
+    ret = os.system('python update_assembly_sandal.py')
     if ret:
         production()
 
@@ -197,7 +209,8 @@ mb.pack(side='left')
 mb.menu  =  Menu ( mb, tearoff = 0, activebackground="red", fg="ghost white", bg="chartreuse4", font=["Calibri", 14])
 mb["menu"]  =  mb.menu
 
-mb.menu.add_command (label = "Clicking", command = tkinter1)
+mb.menu.add_command (label = "Cutting", command = tkinter1)
+mb.menu.add_command (label = "Assembly", command = tkinter1_b)
 mb.menu.add_command (label = "Closing", command = tkinter2)
 mb.menu.add_command (label = "Despatch", command = tkinter3)
 mb.menu.add_command (label = "Shipped", command = tkinter4)

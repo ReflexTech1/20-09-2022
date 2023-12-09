@@ -43,20 +43,20 @@ def order_mi():
         cursor = conn.cursor()
         # Insert into Orders
         cursor.execute(r'INSERT INTO MyShoe (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances) VALUES(?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS IDLER", delivery, qty, qty])
+                       "Reflex", timestampStr, code, "MENS MOCCASIN", delivery, qty, qty])
         # Insert into Production
-        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS IDLER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
+        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "MENS MOCCASIN", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
         # Insert into Production_Balances
-        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS IDLER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "MENS MOCCASIN", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size6,Size7,Size8b,Size9b,Size10b) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS IDLER", qty, delivery, size6, size7, size8b, size9b, size10b])
+                       "Reflex", timestampStr, code, "MENS MOCCASIN", qty, delivery, size6, size7, size8b, size9b, size10b])
         # Insert Into Required
         cursor.execute(r'INSERT INTO HOPRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,HandLacing,PBA887,IA80,Cartons,HOPSize6,HOPSize7,HOPSize8b,HOPSize9b,HOPSize10b)'
                        ' VALUES(?,?,?,?,?,?,?*(1.395/6),?*(1.5/50),?*(1.35/54),?*(1.45/50),?*2,?*0.105,?*0.38,?*2.9,?*0.027,?*0.027,?/12,?,?,?,?,?)',
-                       ["Reflex", timestampStr, code, "MENS IDLER", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size6, size7, size8b, size9b, size10b])
+                       ["Reflex", timestampStr, code, "MENS MOCCASIN", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size6, size7, size8b, size9b, size10b])
         # Upper Material
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.395/6), LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "SCH0001",))
@@ -149,8 +149,8 @@ def order_mi():
         sys.exit(updated)
 
 
-label_0 = Label(root, text="Mens Idler", width=13,
-                background="lightskyblue3", font=("bold", 20)).place(x=110, y=23)
+label_0 = Label(root, text="Mens Moccasin", width=14,
+                background="lightskyblue3", font=("bold", 20)).place(x=75, y=23)
 
 label_on = Label(root, text="Order No:", width=20,
                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=90)

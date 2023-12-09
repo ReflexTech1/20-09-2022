@@ -24,7 +24,7 @@ def reflex_prod():
     tree.delete(*tree.get_children())
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM SlipProd_Balances ORDER BY DelDate ASC")
+        mycursor.execute("SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProd_Balances ORDER BY DelDate ASC")
         for row in mycursor:
             tree.insert('', 'end', values=row[1:14])
 
@@ -48,11 +48,11 @@ tree.heading(2, text="OrderNo")
 tree.heading(3, text="Style / Description")
 tree.heading(4, text="Delivery Date")
 tree.heading(5, text="Quantity")
-tree.heading(6, text="Clicking")
-tree.heading(7, text="Closing")
-tree.heading(8, text="Finishing")
-tree.heading(9, text="Despatch")
-tree.heading(10, text="Warehouse")
+tree.heading(6, text="Cutting")
+tree.heading(7, text="Assembly")
+tree.heading(8, text="Closing")
+tree.heading(9, text="Finishing")
+tree.heading(10, text="Despatch")
 tree.heading(11, text="To Ship")
 tree.heading(12, text="Shipped")
 

@@ -35,20 +35,20 @@ def order_bi():
         cursor = conn.cursor()
         # Insert into Orders
         cursor.execute(r'INSERT INTO MyShoe (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances) VALUES(?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS IDLER", delivery, qty, qty])
+                       "Reflex", timestampStr, code, "BOYS MOCCASIN", delivery, qty, qty])
         # Insert into Production
-        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS IDLER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
+        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "BOYS MOCCASIN", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
         # Insert into Production_Balances
-        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS IDLER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                       "Reflex", timestampStr, code, "BOYS MOCCASIN", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
                        # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5) VALUES(?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS IDLER", qty, delivery, size2, size3, size4, size5])
+                       "Reflex", timestampStr, code, "BOYS MOCCASIN", qty, delivery, size2, size3, size4, size5])
         # Insert Into Required
         cursor.execute(r'INSERT INTO HOPRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,HandLacing,PBA887,IA80,Cartons,HOPSize2,HOPSize3,HOPSize4,HOPSize5)'
                        ' VALUES(?,?,?,?,?,?,?*(1.395/7),?*(1.5/66),?*(1.35/70),?*(1.45/64),?*2,?*0.105,?*0.38,?*2.5,?*0.027,?*0.027,?/12,?,?,?,?)',
-                       ["Reflex", timestampStr, code, "BOYS IDLER", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size2, size3, size4, size5])
+                       ["Reflex", timestampStr, code, "BOYS MOCCASIN", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size2, size3, size4, size5])
         # Upper Material
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.395/7), LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "SCH0001",))
@@ -128,7 +128,7 @@ def order_bi():
         delivery = Delivery.get()
         qty = Quantity.get()
         cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS IDLER", delivery, size2, size3, size4, size5, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS MOCCASSIN", delivery, size2, size3, size4, size5, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()
@@ -136,8 +136,8 @@ def order_bi():
         sys.exit(updated)
 
 
-label_0 = Label(root, text="Boys Idler", width=13,
-                background="lightskyblue3", font=("bold", 20)).place(x=110, y=23)
+label_0 = Label(root, text="Boys Moccasin", width=14,
+                background="lightskyblue3", font=("bold", 20)).place(x=75, y=23)
 
 label_on = Label(root, text="Order No:", width=20,
                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=90)

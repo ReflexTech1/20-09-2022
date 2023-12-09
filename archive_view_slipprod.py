@@ -20,7 +20,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip FROM SlipProd_Archive")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Cutting,Closing,Finishing,Despatch,ToShip FROM SlipProd_Archive")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:9], tags=('evenrow'))
 
@@ -44,7 +44,7 @@ tree.heading(1, text="Order No.", anchor=N)
 tree.heading(2, text="Style/Description")
 tree.heading(3, text="Delivery Date")
 tree.heading(4, text="Order Qty")
-tree.heading(5, text="To Click")
+tree.heading(5, text="To Cut")
 tree.heading(6, text="In Closing")
 tree.heading(7, text="In Finishing")
 tree.heading(8, text="In Despatch")
@@ -78,7 +78,7 @@ def tkinter7():
 
 
 btn = Button(root, text='Exit', style='B.TButton', command=root.destroy).pack(side='right')
-btn4 = Button(root, text="Search Balance", style='R.TButton', command=tkinter5).pack(side='left')
+#btn4 = Button(root, text="Search Balance", style='R.TButton', command=tkinter5).pack(side='left')
 btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')
 
 

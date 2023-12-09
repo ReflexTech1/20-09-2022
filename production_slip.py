@@ -68,7 +68,7 @@ def Balance():
     if order is not None:
         with sqlite3.connect('Reflex Footwear.sql3') as conn4:
             cursor4 = conn4.cursor()
-            cursor4.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM SlipProd_Balances WHERE Order2=?', (order,))
+            cursor4.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProd_Balances WHERE Order2=?', (order,))
             results = cursor4.fetchall()
 
             item_0_in_result = [_[0] for _ in results] # Factory
@@ -77,11 +77,11 @@ def Balance():
             result_as_text3 = '\n'.join([x[3] for x in results]) # Style
             item_0_in_result4 = [_[4] for _ in results] # Delivery date
             item_0_in_result5 = [_[5] for _ in results] # Quantity
-            item_0_in_result6 = [_[6] for _ in results] # Clicking
-            item_0_in_result7 = [_[7] for _ in results] # Closing
-            item_0_in_result8 = [_[8] for _ in results] # Finishing
-            item_0_in_result9 = [_[9] for _ in results] # Despatch
-            item_0_in_result10 = [_[10] for _ in results] # Warehouse
+            item_0_in_result6 = [_[6] for _ in results] # Cutting
+            item_0_in_result7 = [_[7] for _ in results] # Assembly
+            item_0_in_result8 = [_[8] for _ in results] # Closing
+            item_0_in_result9 = [_[9] for _ in results] # Finishing
+            item_0_in_result10 = [_[10] for _ in results] # Despatch
             item_0_in_result11 = [_[11] for _ in results] # To Ship
             item_0_in_result12 = [_[12] for _ in results] # Shipped
 
@@ -101,20 +101,20 @@ def Balance():
             Label(root4, text="Order Quantity:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=40, y=350)
             Label(root4, text=item_0_in_result5, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=250, y=350)
 
-            Label(root4, text="Balance To Click:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=150)
+            Label(root4, text="Balance To Cut:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=150)
             Label(root4, text=item_0_in_result6, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=150)
+            
+            Label(root4, text="In Assembly:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
+            Label(root4, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
 
-            Label(root4, text="Closing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=200)
+            Label(root4, text="In Closing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=200)
             Label(root4, text=item_0_in_result7, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=200)
 
-            Label(root4, text="Finishing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=250)
+            Label(root4, text="In Finishing:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=250)
             Label(root4, text=item_0_in_result8, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=250)
 
-            Label(root4, text="Despatch:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=300)
+            Label(root4, text="In Despatch:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=300)
             Label(root4, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=300)
-
-            Label(root4, text="Warehouse:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
-            Label(root4, text=item_0_in_result9, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
 
             Label(root4, text="Balance To Ship:", width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=500, y=350)
             Label(root4, text=item_0_in_result11, width=20, background="skyblue2", foreground="", font=("Arial, bold", 14)).place(x=710, y=350)
@@ -125,7 +125,7 @@ def Balance():
             cursor4.close()
 
 
-def Clicking():
+def Cutting():
     root3 = Toplevel()
     root3.geometry('380x250')
     root3.title("Record Score")
@@ -137,15 +137,15 @@ def Clicking():
     curItem = tree.focus()
     code = tree.item(curItem)['values'][0]
     desc = tree.item(curItem)['values'][1]
-    def ClickUpdate():
+    def CuttingUpdate():
         balance = Balance.get()
         reason = Reason.get()
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor3 = conn.cursor()
-            cursor3.execute('UPDATE SlipProduction SET Clicking=Clicking-? WHERE Order2=?', [balance, code,])
-            cursor3.execute('UPDATE SlipProduction SET Closing=Closing+? WHERE Order2=?', [balance, code,])
-            cursor3.execute('UPDATE SlipProd_Balances SET Clicking=Clicking-? WHERE Order2=?', [balance, code, ])
-            cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Order2,Style,Clicking,Reason) VALUES(?,?,?,?,?,?)', ["Reflex", timestampStr, code, desc, balance, reason])
+            cursor3.execute('UPDATE SlipProduction SET Cutting=Cutting-? WHERE Order2=?', [balance, code,])
+            cursor3.execute('UPDATE SlipProduction SET Assembly=Assembly+? WHERE Order2=?', [balance, code,])
+            cursor3.execute('UPDATE SlipProd_Balances SET Cutting=Cutting-? WHERE Order2=?', [balance, code, ])
+            cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Order2,Style,Cutting,Reason) VALUES(?,?,?,?,?,?)', ["Reflex", timestampStr, code, desc, balance, reason])
             updated = cursor3.rowcount
             cursor3.close()
             conn.commit()
@@ -153,17 +153,17 @@ def Clicking():
             production()
 
     def submit_root(e):
-       command=ClickUpdate()
+       command=CuttingUpdate()
 
     root3.bind('<Return>', lambda e: submit_root(e))
 
     style3.configure('C.TButton', font=('Arial', 12, 'bold'), foreground='red')
     style3.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
 
-    label_0 = Label(root3, text="Clicking Score", background="lightblue2", width=20, font=("Arial", 20, "bold"))
+    label_0 = Label(root3, text="Cutting Score", background="lightblue2", width=20, font=("Arial", 20, "bold"))
     label_0.place(x=100, y=23)
 
-    label_3 = Label(root3, text="Quantity Clicked", width=20, background="lightblue2", font=("Arial", 12, "bold"))
+    label_3 = Label(root3, text="Quantity Cut", width=20, background="lightblue2", font=("Arial", 12, "bold"))
     label_3.place(x=20, y=100)
     entry_3 = Entry(root3, textvar=Balance, background="lightblue2", font=("Arial", 12, "bold"))
     entry_3.place(x=180, y=100)
@@ -174,7 +174,62 @@ def Clicking():
     entry_4.place(x=180, y=140)
 
     # submitbtn = customtkinter.CTkButton(root3, text="Submit", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='blue', command=ClickUpdate).place(x=60, y=200)
-    submit_btn = Button(root3, text='Submit', width=11, style='S.TButton', command=ClickUpdate)
+    submit_btn = Button(root3, text='Submit', width=11, style='S.TButton', command=CuttingUpdate)
+    submit_btn.place(x=60, y=200)
+    exit1 = Button(root3, text='Close', width=11, style='C.TButton', command=root3.destroy)
+    exit1.place(x=250, y=200)
+
+
+def Assembly():
+    root3 = Toplevel()
+    root3.geometry('380x250')
+    root3.title("Record Score")
+    root3.config(bg="lightblue2")
+    timestampStr = dateTimeObj.strftime("%m-%d-%Y")
+    style3 = ttk.Style()
+    Balance = StringVar()
+    Reason = StringVar()
+    curItem = tree.focus()
+    code = tree.item(curItem)['values'][0]
+    desc = tree.item(curItem)['values'][1]
+    def AssemblyUpdate():
+        balance = Balance.get()
+        reason = Reason.get()
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            cursor3 = conn.cursor()
+            cursor3.execute('UPDATE SlipProduction SET Assembly=Assembly-? WHERE Order2=?', [balance, code,])
+            cursor3.execute('UPDATE SlipProduction SET Closing=Closing+? WHERE Order2=?', [balance, code,])
+            cursor3.execute('UPDATE SlipProd_Balances SET Assembly=Assembly-? WHERE Order2=?', [balance, code, ])
+            cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Order2,Style,Assembly,Reason) VALUES(?,?,?,?,?,?)', ["Reflex", timestampStr, code, desc, balance, reason])
+            updated = cursor3.rowcount
+            cursor3.close()
+            conn.commit()
+            root3.destroy()
+            production()
+
+    def submit_root(e):
+       command=AssemblyUpdate()
+
+    root3.bind('<Return>', lambda e: submit_root(e))
+
+    style3.configure('C.TButton', font=('Arial', 12, 'bold'), foreground='red')
+    style3.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
+
+    label_0 = Label(root3, text="Assembly Score", background="lightblue2", width=20, font=("Arial", 20, "bold"))
+    label_0.place(x=100, y=23)
+
+    label_3 = Label(root3, text="Quantity Checked", width=20, background="lightblue2", font=("Arial", 12, "bold"))
+    label_3.place(x=20, y=100)
+    entry_3 = Entry(root3, textvar=Balance, background="lightblue2", font=("Arial", 12, "bold"))
+    entry_3.place(x=180, y=100)
+
+    label_4 = Label(root3, text="Reason", width=20, background="lightblue2", font=("Arial", 12, "bold"))
+    label_4.place(x=20, y=140)
+    entry_4 = Entry(root3, textvar=Reason, background="lightblue2", font=("Arial", 12, "bold"))
+    entry_4.place(x=180, y=140)
+
+    # submitbtn = customtkinter.CTkButton(root3, text="Submit", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='blue', command=ClickUpdate).place(x=60, y=200)
+    submit_btn = Button(root3, text='Submit', width=11, style='S.TButton', command=AssemblyUpdate)
     submit_btn.place(x=60, y=200)
     exit1 = Button(root3, text='Close', width=11, style='C.TButton', command=root3.destroy)
     exit1.place(x=250, y=200)
@@ -303,67 +358,6 @@ def Despatch():
     exit1.place(x=250, y=220)
 
 
-def Warehouse():
-    root3 = Toplevel()
-    root3.geometry('380x270')
-    root3.title("Record Score")
-    root3.config(bg="lightblue2")
-    timestampStr = dateTimeObj.strftime("%m-%d-%Y")
-    style3 = ttk.Style()
-    Balance = StringVar()
-    Line  = StringVar()
-    Reason = StringVar()
-    curItem = tree.focus()
-    code = tree.item(curItem)['values'][0]
-    desc = tree.item(curItem)['values'][1]
-    def WareUpdate():
-        balance = Balance.get()
-        line = Line.get()
-        reason = Reason.get()
-        with sqlite3.connect('Reflex Footwear.sql3') as conn:
-            cursor3 = conn.cursor()
-            cursor3.execute('UPDATE SlipProduction SET Warehouse=Warehouse+? WHERE Order2=?', [balance, code, ])
-            cursor3.execute('UPDATE SlipProduction SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
-            cursor3.execute('UPDATE SlipProd_Balances SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code,])
-            cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Line,Order2,Style,Warehouse,Reason) VALUES(?,?,?,?,?,?,?)', ["Reflex", timestampStr, line, code, desc, balance, reason])
-            updated = cursor3.rowcount
-            cursor3.close()
-            conn.commit()
-            root3.destroy()
-            production()
-
-    def submit_root(e):
-       command=WareUpdate()
-
-    root3.bind('<Return>', lambda e: submit_root(e))
-
-    style3.configure('C.TButton', font=('Arial', 12, 'bold'), foreground='red')
-    style3.configure('S.TButton', font=('Arial', 12, 'bold'), foreground='blue')
-
-    label_0 = Label(root3, text="Warehouse Score", background="lightblue2", width=20, font=("Arial", 20, "bold"))
-    label_0.place(x=100, y=23)
-    label_2 = Label(root3, text="Line No", width=20, background="lightblue2", font=("Arial", 12, "bold"))
-    label_2.place(x=20, y=100)
-    entry_2 = Entry(root3, textvar=Line, background="lightblue2", font=("Arial", 12, "bold"))
-    entry_2.place(x=180, y=100)
-
-    label_3 = Label(root3, text="Quantity Received", width=20, background="lightblue2", font=("Arial", 12, "bold"))
-    label_3.place(x=20, y=140)
-    entry_3 = Entry(root3, textvar=Balance, background="lightblue2", font=("Arial", 12, "bold"))
-    entry_3.place(x=180, y=140)
-
-    label_4 = Label(root3, text="Reason", width=20, background="lightblue2", font=("Arial", 12, "bold"))
-    label_4.place(x=20, y=180)
-    entry_4 = Entry(root3, textvar=Reason, background="lightblue2", font=("Arial", 12, "bold"))
-    entry_4.place(x=180, y=180)
-
-    # submitbtn = customtkinter.CTkButton(root3, text="Submit", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='blue', command=ClickUpdate).place(x=60, y=200)
-    submit_btn = Button(root3, text='Submit', width=11, style='S.TButton', command=WareUpdate)
-    submit_btn.place(x=60, y=220)
-    exit1 = Button(root3, text='Close', width=11, style='C.TButton', command=root3.destroy)
-    exit1.place(x=250, y=220)
-
-
 def Shipped():
     root3 = Toplevel()
     root3.geometry('380x270')
@@ -387,7 +381,7 @@ def Shipped():
             cursor3.execute('UPDATE SlipProduction SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
             cursor3.execute('UPDATE SlipProd_Balances SET ToShip=ToShip-? WHERE Order2=?', [balance, code, ])
             cursor3.execute('UPDATE SlipProd_Balances SET Shipped=Shipped+? WHERE Order2=?', [balance, code, ])
-            cursor3.execute('UPDATE SlipProduction SET Warehouse=Warehouse-? WHERE Order2=?', [balance, code, ])
+            cursor3.execute('UPDATE SlipProduction SET Despatch=Despatch-? WHERE Order2=?', [balance, code, ])
             cursor3.execute('INSERT INTO ProductionBreakdown (Factory,Date,Line,Order2,Style,Shipped,Reason) VALUES(?,?,?,?,?,?,?)', ["Reflex", timestampStr, line, code, desc, balance, reason])
             updated = cursor3.rowcount
             cursor3.close()
@@ -428,14 +422,15 @@ def Shipped():
 
 edit2 = Menu(root, tearoff = 0)
 #edit.add_separator()
-edit2.add_command(label ="Clicking", command = Clicking, activebackground="Blue", font=('Calibri', 14, 'bold'))
+edit2.add_command(label ="Cutting", command = Cutting, activebackground="Blue", font=('Calibri', 14, 'bold'))
+#edit.add_separator()
+edit2.add_command(label ="Assembly", command = Assembly, activebackground="Blue", font=('Calibri', 14, 'bold'))
 #edit.add_separator()
 edit2.add_command(label ="Closing", command = Closing, activebackground="Blue", font=('Calibri', 14, 'bold'))
 #edit.add_separator()
 edit2.add_command(label ="Despatch", command = Despatch, activebackground="Blue", font=('Calibri', 14, 'bold'))
 #edit.add_separator()
-edit2.add_command(label ="Warehouse", command = Warehouse, activebackground="Blue", font=('Calibri', 14, 'bold'))
-#edit.add_separator()
+
 edit2.add_command(label ="Shipped", command = Shipped, activebackground="Blue", font=('Calibri', 14, 'bold'))
 #edit.add_separator()
 
@@ -459,7 +454,7 @@ def ClickPB():
         tree2.delete(*tree2.get_children())
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             mycursor2 = conn.cursor()
-            mycursor2.execute("SELECT Date,Order2,Clicking,Closing,Despatch,Warehouse,Shipped FROM ProductionBreakdown WHERE Order2= '{}'".format(order))
+            mycursor2.execute("SELECT Date,Order2,Cutting,Assembly,Closing,Despatch,Shipped FROM ProductionBreakdown WHERE Order2= '{}'".format(order))
             for row in mycursor2:
                     tree2.insert('', 'end',values=row[0:9])
 
@@ -475,10 +470,10 @@ def ClickPB():
 
     tree2.heading(0, text="Date")
     tree2.heading(1, text="Order No.")
-    tree2.heading(2, text="Clicking")
-    tree2.heading(3, text="Closing")
-    tree2.heading(4, text="Despatch")
-    tree2.heading(5, text="Warehouse")
+    tree2.heading(2, text="Cutting")
+    tree2.heading(3, text="Cutting")
+    tree2.heading(4, text="Closing")
+    tree2.heading(5, text="Despatch")
     tree2.heading(6, text="Shipped")
 
     tree2.column(0, width=160)
@@ -554,7 +549,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped FROM SlipProduction ORDER BY DelDate ASC")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProduction ORDER BY DelDate ASC")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:13])
 
@@ -580,11 +575,11 @@ tree.heading(1, text="Order No.", anchor=N)
 tree.heading(2, text="Style/Description")
 tree.heading(3, text="Delivery Date")
 tree.heading(4, text="Order Qty")
-tree.heading(5, text="To Click")
-tree.heading(6, text="In Closing")
-tree.heading(7, text="In Finishing")
-tree.heading(8, text="In Despatch")
-tree.heading(9, text="In Warehouse")
+tree.heading(5, text="To Cut")
+tree.heading(6, text="In Assembly")
+tree.heading(7, text="In Closing")
+tree.heading(8, text="In Finishing")
+tree.heading(9, text="In Despatch")
 tree.heading(10, text="To Ship")
 tree.heading(11, text="Shipped")
 
@@ -612,7 +607,13 @@ style.configure('R.TButton', font=('Calibri', 14, 'bold', 'underline'), foregrou
 
 
 def tkinter1():
-    ret = os.system('python update_clicking_slip.py')
+    ret = os.system('python update_cutting_slip.py')
+    if ret:
+        production()
+
+
+def tkinter1_b():
+    ret = os.system('python update_assembly_slip.py')
     if ret:
         production()
 
@@ -664,7 +665,8 @@ mb.pack(side='left')
 mb.menu  =  Menu ( mb, tearoff = 0, activebackground="red", fg="ghost white", bg="chartreuse4", font=["Calibri", 14])
 mb["menu"]  =  mb.menu
 
-mb.menu.add_command (label = "Clicking", command = tkinter1)
+mb.menu.add_command (label = "Cutting", command = tkinter1)
+mb.menu.add_command (label = "Assembly", command = tkinter1_b)
 mb.menu.add_command (label = "Closing", command = tkinter2)
 mb.menu.add_command (label = "Despatch", command = tkinter3)
 mb.menu.add_command (label = "Warehouse", command = tkinter4)

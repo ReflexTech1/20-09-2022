@@ -20,7 +20,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip FROM SandalProd_Archive")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Cutting,Closing,Finishing,Despatch,ToShip FROM SandalProd_Archive")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:9], tags=('evenrow'))
 
@@ -44,7 +44,7 @@ tree.heading(1, text="Order No.", anchor=N)
 tree.heading(2, text="Style/Description")
 tree.heading(3, text="Delivery Date")
 tree.heading(4, text="Order Qty")
-tree.heading(5, text="To Click")
+tree.heading(5, text="To Cut")
 tree.heading(6, text="In Closing")
 tree.heading(7, text="In Finishing")
 tree.heading(8, text="In Despatch")

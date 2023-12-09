@@ -61,7 +61,7 @@ def nsme_slipper():
         cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, size34, size56, size78])
         # Insert into Production
-        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery,size34, size56, size78])
@@ -69,7 +69,7 @@ def nsme_slipper():
         cursor.execute(r'INSERT INTO SlipRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Sock,Ribbon,Binding,Gusset,NSLASoles34,NSLASoles56,NSLASoles78)'
                        ' VALUES(?,?,?,?,?,?,?*(1.45/25),?*(1.45/20.4),?*(0.055),?*(1.1),?*(0.16),?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery, qty, qty, qty, qty, qty, size34, size56, size78])
         # Insert into Production_Balances
-        cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Clicking,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+        cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # 3mm Ribbon
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.055), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "RIB0001",))

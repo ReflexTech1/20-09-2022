@@ -21,7 +21,7 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Clicking,Closing,Despatch,ToShip FROM Production_Archive")
+        mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Cutting,Closing,Despatch,ToShip FROM Production_Archive")
         for row in mycursor:
                 tree.insert('', 'end',values=row[0:9], tags=('evenrow'))
 
@@ -45,7 +45,7 @@ tree.heading(0, text="Order No.", anchor=N)
 tree.heading(1, text="Style/Description")
 tree.heading(2, text="Delivery Date")
 tree.heading(3, text="Order Qty")
-tree.heading(4, text="To Click")
+tree.heading(4, text="To Cut")
 tree.heading(5, text="In Closing")
 tree.heading(6, text="In Despatch")
 tree.heading(7, text="To Ship")
@@ -95,7 +95,7 @@ def ClickPB():
         tree2.delete(*tree2.get_children())
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             mycursor2 = conn.cursor()
-            mycursor2.execute("SELECT Date,Order2,Clicking,Closing,Despatch,Shipped FROM ProdBreak_Archive WHERE Order2= '{}'".format(order))
+            mycursor2.execute("SELECT Date,Order2,Cutting,Closing,Despatch,Shipped FROM ProdBreak_Archive WHERE Order2= '{}'".format(order))
             for row in mycursor2:
                     tree2.insert('', 'end',values=row[0:7])
 
@@ -111,7 +111,7 @@ def ClickPB():
 
     tree2.heading(0, text="Date")
     tree2.heading(1, text="Order No.")
-    tree2.heading(2, text="Clicking")
+    tree2.heading(2, text="Cutting")
     tree2.heading(3, text="Closing")
     tree2.heading(4, text="Despatch")
     tree2.heading(6, text="Shipped")

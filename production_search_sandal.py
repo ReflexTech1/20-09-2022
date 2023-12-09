@@ -26,7 +26,7 @@ def production_search():
 
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         cursor = conn.cursor()
-        cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProduction WHERE Order2=?', (order,))
+        cursor.execute('SELECT Factory,Planned,Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM SlipProduction WHERE Order2=?', (order,))
         results = cursor.fetchall()
 
         item_0_in_result = [_[0] for _ in results] # Factory
