@@ -12,7 +12,7 @@ style = ttk.Style()
 
 OrderNo = StringVar()
 Size6 = IntVar()
-Size7 = IntVar()
+Size7b = IntVar()
 Size8b = IntVar()
 Size9b = IntVar()
 Size10b = IntVar()
@@ -32,7 +32,7 @@ root.bind('<Return>', lambda e: submit_root(e))
 def order_m():
     code = OrderNo.get()
     size6 = Size6.get()
-    size7 = Size7.get()
+    size7b = Size7b.get()
     size8b = Size8b.get()
     size9b = Size9b.get()
     size10b = Size10b.get()
@@ -52,11 +52,11 @@ def order_m():
                        "Reflex", timestampStr, code, "MENS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
         # Insert Into Planning
         cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size6,Size7b,Size8b,Size9b,Size10b) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "MENS SYNTHETIC", qty, delivery, size6, size7, size8b, size9b, size10b])
+                       "Reflex", timestampStr, code, "MENS SYNTHETIC", qty, delivery, size6, size7b, size8b, size9b, size10b])
         # Insert Into Required
         cursor.execute(r'INSERT INTO LURequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,KnitBin,Topline,Eyelets,PBA887,IA80,Cartons,SPSize6,SPSize7,SPSize8b,SPSize9b,SPSize10b)'
                        ' VALUES(?,?,?,?,?,?,?*(1.395/8),?*(1.5/70),?*(1.5/32),?*(1.45/28),?*2,?*0.105,?*0.38,?*0.97,?*0.97,?*16,?*0.013333333,?*0.013333333,?/12,?,?,?,?,?)',
-                       ["Reflex", timestampStr, code, "MENS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size6, size7, size8b, size9b, size10b])
+                       ["Reflex", timestampStr, code, "MENS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size6, size7b, size8b, size9b, size10b])
         # Upper Material
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.395/8), LastRec=? WHERE ItemCode=?',
                        (qty, timestampStr, "SCH0001",))
@@ -82,7 +82,7 @@ def order_m():
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (size6, timestampStr, "S/P0012",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size7, timestampStr, "S/P0013",))
+                       (size7b, timestampStr, "S/P0013",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (size8b, timestampStr, "S/P0014",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
@@ -120,7 +120,7 @@ def order_m():
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (size6, timestampStr, "STI0064",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size7, timestampStr, "STI0065",))
+                       (size7b, timestampStr, "STI0065",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
                        (size8b, timestampStr, "STI0066",))
         cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
@@ -140,14 +140,14 @@ def order_m():
         code = OrderNo.get()
         barcode = OrderNo.get()
         size6 = Size6.get()
-        size7 = Size7.get()
+        size7b = Size7b.get()
         size8b = Size8b.get()
         size9b = Size9b.get()
         size10b = Size10b.get()
         delivery = Delivery.get()
         qty = Quantity.get()
         cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7b,Size8,Size9,Size10,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS SYNTHETIC", delivery, size6, size7, size8b, size9b, size10b, qty, 158])
+        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7b,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS SYNTHETIC", delivery, size6, size7b, size8b, size9b, size10b, qty, 158])
         updated = cursor2.rowcount
         conn2.commit()
         cursor2.close()
@@ -175,7 +175,7 @@ entry_m6 = Entry(root, textvar=Size6, background="yellow",
 
 label_m7 = Label(root, text="Size 7:", width=20,
                  background="lightskyblue3", font=("bold", 11)).place(x=40, y=210)
-entry_m7 = Entry(root, textvar=Size7, background="yellow",
+entry_m7 = Entry(root, textvar=Size7b, background="yellow",
                  font=("bold", 10)).place(x=160, y=210)
 
 label_m8 = Label(root, text="Size 8:", width=20,

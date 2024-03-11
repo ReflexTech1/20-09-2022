@@ -35,12 +35,12 @@ frame.pack()
 # Treeview and Configuration
 style = ttk.Style()
 # Modify the font of the body
-style.configure("Treeview", highlightthickness=0, bd=1, font=('Calibri', 11))
+style.configure("Treeview", highlightthickness=0, bd=1, font=('Calibri', 12))
 # Modify the font of the heading
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), foreground='black')
 
 tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-                    height=30, show="headings")
+                    height=44, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="Date")
@@ -56,14 +56,14 @@ tree.heading(10, text="Reason")
 
 tree.column(1, width=150)
 tree.column(2, width=150)
-tree.column(3, width=150)
-tree.column(4, width=150)
-tree.column(5, width=150)
-tree.column(6, width=150)
-tree.column(7, width=150)
-tree.column(8, width=150)
-tree.column(9, width=150)
-tree.column(10, width=150)
+tree.column(3, width=180)
+tree.column(4, width=220)
+tree.column(5, width=180)
+tree.column(6, width=180)
+tree.column(7, width=180)
+tree.column(8, width=180)
+tree.column(9, width=180)
+tree.column(10, width=180)
 
 
 # Scrollbar Layout and Configuration
