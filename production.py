@@ -560,7 +560,7 @@ frame.pack()
 # Treeview and Configuration
 style = ttk.Style()
 # Modify the font of the body
-style.configure("Treeview", bd=2, font=('Calibri', 12))
+style.configure("Treeview", bd=2, font=('Calibri', 13))
 
 # Modify OnClick
 style.map('Treeview', background=[('selected', 'firebrick')])
