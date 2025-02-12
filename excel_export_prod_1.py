@@ -66,7 +66,7 @@ def save_db(dbpath=r'C:\RSoft\Current\Reflex Footwear.sql3', excel_path=None, cs
         for table_name in tables:
             table_name = table_name[0]
             table = pd.read_sql_query(
-                "SELECT Order2,Style,DelDate,OrderQty,Clicking,Closing,Finishing,Despatch,ToShip,Shipped from Production", db)
+                "SELECT Order2,Style,DelDate,OrderQty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped from Production", db)
             {cursor.description[i][0]: _ for i, _ in enumerate(zip(*cursor.fetchall()))
              if all(val is not None for val in _)}
             table.to_excel(writer, sheet_name=table_name, index=False)

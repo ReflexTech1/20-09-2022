@@ -31,7 +31,7 @@ frame.pack()
 # Treeview and Configuration
 style = ttk.Style()
 # Modify the font of the body
-style.configure("Treeview", bd=2, font=('Calibri', 12))
+style.configure("Treeview", bd=2, font=('Calibri', 14))
 
 # Modify OnClick
 style.map('Treeview', background=[('selected', 'firebrick')])
@@ -50,14 +50,14 @@ tree.heading(5, text="In Closing")
 tree.heading(6, text="In Despatch")
 tree.heading(7, text="To Ship")
 
-tree.column(0, width=140)
-tree.column(1, width=210)
-tree.column(2, width=140)
-tree.column(3, width=140)
-tree.column(4, width=140)
-tree.column(5, width=140)
-tree.column(6, width=140)
-tree.column(7, width=140)
+tree.column(0, width=190)
+tree.column(1, width=280)
+tree.column(2, width=190)
+tree.column(3, width=190)
+tree.column(4, width=190)
+tree.column(5, width=190)
+tree.column(6, width=190)
+tree.column(7, width=190)
 
 scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
 scroll.pack(side='right', fill='y')
@@ -87,10 +87,7 @@ def ClickPB():
     style2 = ttk.Style()
     l_logsheet = Label(root2, text="Production Per Order", width=120, anchor=CENTER, font=["Bodoni MT", 30, "bold"], background="grey80", relief="raised").pack(side='top', ipady=10)
 
-    def close_screen(e):
-    	command=root2.destroy()
-    root2.bind('<Escape>', lambda e: close_screen(e))
-
+ 
     def prod_break():
         tree2.delete(*tree2.get_children())
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
@@ -102,11 +99,11 @@ def ClickPB():
     frame2 = Frame(root2)
     frame2.pack()
     style = ttk.Style()
-    style.configure("New.Treeview", bd=2, font=('Calibri', 12))
+    style.configure("New.Treeview", bd=2, font=('Calibri', 13))
     style.map('New.Treeview', background=[('selected', 'firebrick')])
 
     style.configure("New.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-    tree2 = ttk.Treeview(frame2, columns=(0, 1, 2, 3, 4, 5, 6), height=44, show="headings", style="New.Treeview")
+    tree2 = ttk.Treeview(frame2, columns=(0, 1, 2, 3, 4, 5), height=44, show="headings", style="New.Treeview")
     tree2.pack(side='left')
 
     tree2.heading(0, text="Date")
@@ -114,15 +111,14 @@ def ClickPB():
     tree2.heading(2, text="Cutting")
     tree2.heading(3, text="Closing")
     tree2.heading(4, text="Despatch")
-    tree2.heading(6, text="Shipped")
+    tree2.heading(5, text="Shipped")
 
-    tree2.column(0, width=160)
-    tree2.column(1, width=160)
-    tree2.column(2, width=230)
-    tree2.column(3, width=160)
-    tree2.column(4, width=160)
-    tree2.column(5, width=160)
-    tree2.column(6, width=160)
+    tree2.column(0, width=190)
+    tree2.column(1, width=190)
+    tree2.column(2, width=260)
+    tree2.column(3, width=190)
+    tree2.column(4, width=190)
+    tree2.column(5, width=190)
 
     scroll2 = ttk.Scrollbar(frame2, orient="vertical", command=tree2.yview)
     scroll2.pack(side='right', fill='y')
@@ -130,13 +126,18 @@ def ClickPB():
     tree2.configure(yscrollcommand=scroll2.set)
 
     btn = customtkinter.CTkButton(root2, text="Close (Esc)", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='red', command=root2.destroy).pack(side='right')
+    
+    
+    def close_screen(e):
+    	command=root2.destroy()
+    root2.bind('<Escape>', lambda e: close_screen(e))
 
     prod_break()
     root2.mainloop()
 
 
 btn = Button(root, text='Exit', style='B.TButton', command=root.destroy).pack(side='right')
-btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')
+btn6 = Button(root, text="View Archived Scores", style='R.TButton', command=tkinter7).pack(side='left')
 btn2 = Button(root, text='Production', style='B.TButton', command=ClickPB).pack(side='left')
 
 def close_screen2(e):

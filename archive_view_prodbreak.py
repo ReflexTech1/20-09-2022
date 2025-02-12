@@ -20,9 +20,9 @@ def production():
     # tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
-        mycursor.execute("SELECT Factory,Date,Order2,Clicking,Closing,Despatch,Shipped FROM ProdBreak_Archive")
+        mycursor.execute("SELECT Date,Order2,Style,Cutting,Closing,Despatch,Shipped FROM ProdBreak_Archive")
         for row in mycursor:
-                tree.insert('', 'end',values=row[0:9], tags=('evenrow'))
+                tree.insert('', 'end',values=row[0:9])#, tags=('evenrow'))
 
 frame = Frame(root)
 frame.pack()
@@ -30,35 +30,31 @@ frame.pack()
 # Treeview and Configuration
 style = ttk.Style()
 # Modify the font of the body
-style.configure("Treeview", bd=2, font=('Calibri', 12))
+style.configure("Treeview", bd=2, font=('Calibri', 14))
 
 # Modify OnClick
 style.map('Treeview', background=[('selected', 'firebrick')])
 
 # Modify the font of the heading and select columns
-style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9), height=45, show="headings")
+style.configure("Treeview.Heading", font=( "Calibri", 16, 'bold'), background='silver', foreground='black')
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7), height=45, show="headings")
 tree.pack(side='left')
 
-tree.heading(1, text="Order No.", anchor=N)
-tree.heading(2, text="Style/Description")
-tree.heading(3, text="Delivery Date")
-tree.heading(4, text="Order Qty")
-tree.heading(5, text="To Click")
-tree.heading(6, text="In Closing")
-tree.heading(7, text="In Finishing")
-tree.heading(8, text="In Despatch")
-tree.heading(9, text="To Ship")
+tree.heading(1, text="Archived Date", anchor=N)
+tree.heading(2, text="Order No.", anchor=N)
+tree.heading(3, text="Style/Description")
+tree.heading(4, text="To Click")
+tree.heading(5, text="In Closing")
+tree.heading(6, text="In Despatch")
+tree.heading(7, text="Shipped")
 
-tree.column(1, width=140)
-tree.column(2, width=210)
-tree.column(3, width=140)
-tree.column(4, width=140)
-tree.column(5, width=140)
-tree.column(6, width=140)
-tree.column(7, width=140)
-tree.column(8, width=140)
-tree.column(9, width=140)
+tree.column(1, width=220)
+tree.column(2, width=190)
+tree.column(3, width=270)
+tree.column(4, width=190)
+tree.column(5, width=190)
+tree.column(6, width=190)
+tree.column(7, width=190)
 
 scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
 scroll.pack(side='right', fill='y')
@@ -76,6 +72,9 @@ def tkinter7():
     if ret:
         production()
 
+def close_screen2(e):
+    	command=root.destroy()
+root.bind('<Escape>', lambda e: close_screen2(e))
 
 btn = Button(root, text='Exit', style='B.TButton', command=root.destroy).pack(side='right')
 

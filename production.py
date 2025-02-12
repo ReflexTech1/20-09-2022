@@ -31,7 +31,6 @@ def update_time():
 #Bind keys
 def close_screen(e):
 	command=root.destroy()
-root.bind('<Escape>', lambda e: close_screen(e))
 
 
 def do_popup(event):
@@ -47,9 +46,10 @@ def scores(e):
     finally:
         edit2.grab_release()
 
+
+root.bind('<Escape>', lambda e: close_screen(e))
 root.bind("<Button-3>", do_popup)
 root.bind('<Double-1>', lambda e: scores(e))
-
 
 def Balance():
     curItem = tree.focus()
@@ -561,7 +561,7 @@ frame.pack()
 style = ttk.Style()
 # Modify the font of the body
 style.configure("Treeview", bd=2, font=('Calibri', 13))
-
+ 
 # Modify OnClick
 style.map('Treeview', background=[('selected', 'firebrick')])
 
@@ -602,7 +602,6 @@ tree.configure(yscrollcommand=scroll.set)
 
 style = Style()
 style.configure('R.TButton', font=('Calibri', 14, 'bold', 'underline'), foreground='dodgerblue4', background='grey80')
-#style.configure('B.TButton', font=('Calibri', 14, 'bold', 'underline'), foreground='firebrick', background='grey80')
 
 
 def tkinter6():
@@ -629,6 +628,7 @@ btn5 = customtkinter.CTkButton(root, text="Export", border_width=3, text_font=('
 btn6 = customtkinter.CTkButton(root, text="View Scores", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter7).pack(side='left')
 btn6 = customtkinter.CTkButton(root, text="View Balances", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter8).pack(side='left')
 
+# Normal button / Not customTkinter
 # btn = Button(root, text='Close (Esc)', style='B.TButton', command=root.destroy).pack(side='right')
 # btn5 = Button(root, text="Export", style='R.TButton', command=tkinter6).pack(side='right')
 # btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')

@@ -33,10 +33,15 @@ frame.pack()
 
 # Treeview
 style = ttk.Style()
-style.configure("Treeview.Heading", font=(
-    "Calibri", 17, 'bold'), foreground='black')
+style.configure("Treeview.Heading", font=("Calibri", 17, 'bold'), foreground='black')
 
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4), height=29, show="headings")
+# Modify the font of the body
+style.configure("Treeview", bd=2, font=('Calibri', 14))
+
+# Modify OnClick
+style.map('Treeview', background=[('selected', 'firebrick')])
+
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4), height=45, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="OrderNo")
@@ -44,16 +49,15 @@ tree.heading(2, text="Style/Description")
 tree.heading(3, text="Delivery Date")
 tree.heading(4, text="Quantity")
 
-tree.column(1, width=170)
-tree.column(2, width=410)
-tree.column(3, width=210)
-tree.column(4, width=210)
+tree.column(1, width=190)
+tree.column(2, width=430)
+tree.column(3, width=230)
+tree.column(4, width=230)
 
-# Scrollbar
-# scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
-# scroll.pack(side='right', fill='y')
-
-# tree.configure(yscrollcommand=scroll.set)
+Scrollbar
+scroll = ttk.Scrollbar(frame, orient="vertical", command=tree.yview)
+scroll.pack(side='right', fill='y')
+tree.configure(yscrollcommand=scroll.set)
 
 # Style of Buttons
 style = Style()
@@ -62,11 +66,11 @@ style.configure('E.TButton', font=('Arial Narrow', 14, 'bold',
 style.configure('N.TButton', font=('Arial Narrow', 14, 'bold',
                                    'underline'), foreground='blue2', background='skyblue3')
 
-
-def tkinter10():
-    ret3 = os.system('python order_search.py')
-    if ret3:
-        orders()
+#to add order search input box
+#def tkinter10():
+    #ret3 = os.system('python order_search.py')
+    #if ret3:
+        #orders()
 
 
 def tkinter11():
@@ -87,10 +91,14 @@ def tkinter13():
         orders()
 
 
+def close_screen(e):
+    	command=root.destroy()
+root.bind('<Escape>', lambda e: close_screen(e))
+
 # Buttons
 btn = Button(root, text='Exit', style='E.TButton', command=root.destroy).pack(side='right')
 
-btn3 = Button(root, text='Search Orders', style='N.TButton', command=tkinter10).pack(side='left')
+#btn3 = Button(root, text='Search Orders', style='N.TButton', command=tkinter10).pack(side='left')
 btn4 = Button(root, text='View Production', style='N.TButton', command=tkinter11).pack(side='left')
 btn5 = Button(root, text='View Planning', style='N.TButton', command=tkinter12).pack(side='left')
 btn6 = Button(root, text='Export', style='N.TButton', command=tkinter13).pack(side='right')

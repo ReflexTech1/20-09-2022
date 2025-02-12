@@ -40,6 +40,7 @@ def order_ml():
     size10b = Size10b.get()
     delivery = Delivery.get()
     qty = Quantity.get()
+
     if qty == sum([size6+size7b+size8b+size9b+size10b]):
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor = conn.cursor()
@@ -56,7 +57,7 @@ def order_ml():
             cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size6,Size7b,Size8b,Size9b,Size10b) VALUES(?,?,?,?,?,?,?,?,?,?,?)', [
                        "Reflex", timestampStr, code, "MENS LEATHER", qty, delivery, size6, size7b, size8b, size9b, size10b])
         # Insert Into Required (check Topline + KnitBinding)
-            cursor.execute(r'INSERT INTO LURequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,KnitBin,Topline,Eyelets,PBA887,IA80,Cartons,SPSize6,SPSize7,SPSize8b,SPSize9b,SPSize10b)'
+            cursor.execute(r'INSERT INTO LURequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,KnitBin,Topline,Eyelets,PBA887,IA80,Cartons,SPSize6,SPSize7b,SPSize8b,SPSize9b,SPSize10b)'
                        ' VALUES(?,?,?,?,?,?,?*(6.9/3.5),?*(1.5/70),?*(1.5/32),?*(1.45/28),?*2,?*0.105,?*0.38,?*0.97,?*0.97,?*16,?*0.013333333,?*0.013333333,?/12,?,?,?,?,?)',
                        ["Reflex", timestampStr, code, "MENS LEATHER", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size6, size7b, size8b, size9b, size10b])
         # Upper Material
@@ -154,8 +155,8 @@ def order_ml():
             size10b = Size10b.get()
             delivery = Delivery.get()
             qty = Quantity.get()
-            cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7b,Size8,Size9,Size10,Qty,Ticket)' %code)
-            cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7b,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS LEATHER", delivery, size6, size7b, size8b, size9b, size10b, qty, 158])
+            cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket)' %code)
+            cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size6,Size7,Size8,Size9,Size10,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "MENS LEATHER", delivery, size6, size7b, size8b, size9b, size10b, qty, 158])
             updated = cursor2.rowcount
             conn2.commit()
             cursor2.close()

@@ -13,7 +13,7 @@ style = ttk.Style()
 
 OrderNo = StringVar()
 Supplier = StringVar()
-suppliers = ("MANKOKANA", "RALEHLATHE", "DURBAN")
+suppliers = ("RALEHLATHE", "RALEHLATHE", "MANKOKANA", "DURBAN")
 Size9 = IntVar()
 Size10 = IntVar()
 Size11 = IntVar()

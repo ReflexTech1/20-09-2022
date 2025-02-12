@@ -3,6 +3,7 @@ from tkinter import ttk
 import sqlite3
 from tkinter.ttk import *
 from datetime import datetime
+from tkinter import messagebox
 
 root = Tk()
 root.geometry('650x600')
@@ -55,41 +56,44 @@ def nsme_slipper():
     delivery = Delivery.get()
     qty = Quantity.get()
 
-    with sqlite3.connect('Reflex Footwear.sql3') as conn:
-        cursor = conn.cursor()
-        # Insert into Orders
-        cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, size34, size56, size78])
-        # Insert into Production
-        cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
-        # Insert Into Planning
-        cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery,size34, size56, size78])
-        # Insert Into Required
-        cursor.execute(r'INSERT INTO SlipRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Sock,Ribbon,Binding,Gusset,NSLASoles34,NSLASoles56,NSLASoles78)'
-                       ' VALUES(?,?,?,?,?,?,?*(1.45/25),?*(1.45/20.4),?*(0.055),?*(1.1),?*(0.16),?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery, qty, qty, qty, qty, qty, size34, size56, size78])
-        # Insert into Production_Balances
-        cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
-        # 3mm Ribbon
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.055), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "RIB0001",))
-        # Soles
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size34, timestampStr, sole1))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size56, timestampStr, sole2))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size78, timestampStr, sole3))
-        # Gusset Elastic
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.16), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "ELA0008",))
-        # 25mm Tag Pin
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?', (qty, timestampStr, "PIN0001",))
-        # Polybag
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?', (qty, timestampStr, "BAG0003",))
+    if qty == sum([size34+size56+size78]):
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            cursor = conn.cursor()
+            # Insert into Orders
+            cursor.execute(r'INSERT INTO MySlippers (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, size34, size56, size78])
+            # Insert into Production
+            cursor.execute(r'INSERT INTO SlipProduction (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
+            # Insert Into Planning
+            cursor.execute(r'INSERT INTO PlanSlip (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,NSLASoles34,NSLASoles56,NSLASoles78) VALUES(?,?,?,?,?,?,?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery,size34, size56, size78])
+            # Insert Into Required
+            cursor.execute(r'INSERT INTO SlipRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Sock,Ribbon,Binding,Gusset,NSLASoles34,NSLASoles56,NSLASoles78)'
+                           ' VALUES(?,?,?,?,?,?,?*(1.45/25),?*(1.45/20.4),?*(0.055),?*(1.1),?*(0.16),?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery, qty, qty, qty, qty, qty, size34, size56, size78])
+            # Insert into Production_Balances
+            cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+            # 3mm Ribbon
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.055), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "RIB0001",))
+            # Soles
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size34, timestampStr, sole1))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size56, timestampStr, sole2))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE Description=?', (size78, timestampStr, sole3))
+            # Gusset Elastic
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.16), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "ELA0008",))
+            # 25mm Tag Pin
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?', (qty, timestampStr, "PIN0001",))
+            # Polybag
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?', (qty, timestampStr, "BAG0003",))
 
-        updated = cursor.rowcount
-        conn.commit()
-        cursor.close()
-        root.destroy()
-        sys.exit(updated)  # return value whether record has been updated
+            updated = cursor.rowcount
+            conn.commit()
+            cursor.close()
+            root.destroy()
+            sys.exit(updated)  # return value whether record has been updated
 
+    else:
+        messagebox.showwarning(title="Confirmation", message="The Size Range Does Not Equal The Total.\nPlease Confirm Sizes and Total Again.")
 
 label_0 = Label(root, text="CLOSED TOE NSLA SLIPPER", width=40, background="lightskyblue3", relief='raised', font=("bold", 20), anchor=CENTER).place(x=24, y=23)
 

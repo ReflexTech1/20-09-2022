@@ -8,14 +8,14 @@ from tkcalendar import Calendar
 
 dateTimeObj = datetime.now()
 
-timestampStr = dateTimeObj.strftime("%d-%b")
+timestampStr = dateTimeObj.strftime("%d-%b-%Y")
 
 # Connect to the database
 conn = sqlite3.connect("Reflex Footwear.sql3")
 cursor = conn.cursor()
 
 def export_to_excel():
-    # Retrieve the variables from the input fieldsT
+    # Retrieve the variables from the input fields
     variable1 = input1.get()
     variable2 = input2.get()
 

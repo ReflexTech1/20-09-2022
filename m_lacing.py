@@ -95,6 +95,11 @@ def tkinter3():
         m_lacing()
 
 
+#Bind keys
+def close_screen(e):
+	command=root.destroy()
+root.bind('<Escape>', lambda e: close_screen(e))
+
 # Buttons
 btn = Button(root, text='Exit', style='E.TButton',
              command=root.destroy).pack(side='right')

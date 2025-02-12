@@ -3,6 +3,7 @@ from tkinter import ttk
 import sqlite3
 from tkinter.ttk import *
 from datetime import datetime
+from tkinter import messagebox
 
 root = Tk()
 root.geometry('350x470')
@@ -31,116 +32,119 @@ def order_b():
     size5 = Size5.get()
     delivery = Delivery.get()
     qty = Quantity.get()
+    if qty == sum([size2+size3+size4+size5]):
+        with sqlite3.connect('Reflex Footwear.sql3') as conn:
+            cursor = conn.cursor()
+            # Insert into Orders
+            cursor.execute(r'INSERT INTO MyShoe (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances) VALUES(?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty])
+            # Insert into Production
+            cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
+            # Insert Into Planning
+            cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5) VALUES(?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "BOYS SYNTHETIC", qty, delivery, size2, size3, size4, size5])
+            # Insert into Production_Balances
+            cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+            # Insert Into Required
+            cursor.execute(r'INSERT INTO LURequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,KnitBin,Topline,Eyelets,PBA887,IA80,Cartons,SPSize2,SPSize3,SPSize4,SPSize5)'
+                           ' VALUES(?,?,?,?,?,?,?*(1.375/9),?*(1.5/78.5),?*(1.5/36.5),?*(1.45/36),?*2,?*0.105,?*0.38,?*0.9,?*0.9,?*16,?*0.027,?*0.027,?/12,?,?,?,?)',
+                           ["Reflex", timestampStr, code, "BOYS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size2, size3, size4, size5])
+            # Upper Material
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.375/9), LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "SCH0001",))
+            # Stiffener
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.5/78.5), LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "DURAGRIP",))
+            # Insole Board
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.5/36.5), LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "INS0002",))
+            # Sock Material
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.45/36), LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "SCH0002",))
+            # 80cm Laces
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*2, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "LAC0002",))
+            # Foil
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.105, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "FOI0003",))
+            # Gusset Elastic
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.38, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "ELA0008",))
+            # 13.5mm Knit Binding
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.9, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "BIN0001",))
+            # Topline
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.9, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "TOPLINE",))
+            # PBA 887
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.027, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "CH0001",))
+            # Soles
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size2, timestampStr, "S/P0008",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size3, timestampStr, "S/P0009",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size4, timestampStr, "S/P0010",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size5, timestampStr, "S/P0011",))
+            # Eyelets
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*16, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "EYE0001",))
+            # IA 80
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.013, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "CH0003",))
+            # Cartons
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?/12, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "CAR0004",))
+            # Swingtags
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "SPT0001",))
+            # 25mm Tag Pin
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "PIN0001",))
+            # Polybag
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "BAG0004",))
+            # Hanger Sticker
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size2, timestampStr, "STI0060",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size3, timestampStr, "STI0061",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size4, timestampStr, "STI0062",))
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (size5, timestampStr, "STI0063",))
+            # Hanger
+            cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
+                           (qty, timestampStr, "HAN0003",))
 
-    with sqlite3.connect('Reflex Footwear.sql3') as conn:
-        cursor = conn.cursor()
-        # Insert into Orders
-        cursor.execute(r'INSERT INTO MyShoe (Factory,Planned,OrderNo,Style,DeliveryDate,Quantity,Balances) VALUES(?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty])
-        # Insert into Production
-        cursor.execute(r'INSERT INTO Production (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty, "0", "0", "0", "0", qty, "0",])
-        # Insert Into Planning
-        cursor.execute(r'INSERT INTO Planning (Factory,DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5) VALUES(?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS SYNTHETIC", qty, delivery, size2, size3, size4, size5])
-        # Insert into Production_Balances
-        cursor.execute(r'INSERT INTO Production_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                       "Reflex", timestampStr, code, "BOYS SYNTHETIC", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
-        # Insert Into Required
-        cursor.execute(r'INSERT INTO LURequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Stiffener,Insole,Sock,Laces,Foil,Gusset,KnitBin,Topline,Eyelets,PBA887,IA80,Cartons,SPSize2,SPSize3,SPSize4,SPSize5)'
-                       ' VALUES(?,?,?,?,?,?,?*(1.375/9),?*(1.5/78.5),?*(1.5/36.5),?*(1.45/36),?*2,?*0.105,?*0.38,?*0.9,?*0.9,?*16,?*0.027,?*0.027,?/12,?,?,?,?)',
-                       ["Reflex", timestampStr, code, "BOYS SYNTHETIC", qty, delivery, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, qty, size2, size3, size4, size5])
-        # Upper Material
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.375/9), LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "SCH0001",))
-        # Stiffener
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.5/78.5), LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "DURAGRIP",))
-        # Insole Board
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.5/36.5), LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "INS0002",))
-        # Sock Material
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(1.45/36), LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "SCH0002",))
-        # 80cm Laces
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*2, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "LAC0002",))
-        # Foil
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.105, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "FOI0003",))
-        # Gusset Elastic
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.38, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "ELA0008",))
-        # 13.5mm Knit Binding
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.9, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "BIN0001",))
-        # Topline
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.9, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "TOPLINE",))
-        # PBA 887
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.027, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "CH0001",))
-        # Soles
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size2, timestampStr, "S/P0008",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size3, timestampStr, "S/P0009",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size4, timestampStr, "S/P0010",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size5, timestampStr, "S/P0011",))
-        # Eyelets
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*16, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "EYE0001",))
-        # IA 80
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*0.013, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "CH0003",))
-        # Cartons
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?/12, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "CAR0004",))
-        # Swingtags
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "SPT0001",))
-        # 25mm Tag Pin
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "PIN0001",))
-        # Polybag
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "BAG0004",))
-        # Hanger Sticker
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size2, timestampStr, "STI0060",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size3, timestampStr, "STI0061",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size4, timestampStr, "STI0062",))
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (size5, timestampStr, "STI0063",))
-        # Hanger
-        cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?, LastRec=? WHERE ItemCode=?',
-                       (qty, timestampStr, "HAN0003",))
+            updated = cursor.rowcount
+            conn.commit()
+            cursor.close()
 
-        updated = cursor.rowcount
-        conn.commit()
-        cursor.close()
+        with sqlite3.connect('Log Sheets.sql3') as conn2:
+            cursor2 = conn2.cursor()
+            code = OrderNo.get()
+            barcode = OrderNo.get()
+            size2 = Size2.get()
+            size3 = Size3.get()
+            size4 = Size4.get()
+            size5 = Size5.get()
+            delivery = Delivery.get()
+            qty = Quantity.get()
+            cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code)
+            cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
+            updated = cursor2.rowcount
+            conn2.commit()
+            cursor2.close()
+            root.destroy()
+            sys.exit(updated)  # return value whether record has been updated
 
-    with sqlite3.connect('Log Sheets.sql3') as conn2:
-        cursor2 = conn2.cursor()
-        code = OrderNo.get()
-        barcode = OrderNo.get()
-        size2 = Size2.get()
-        size3 = Size3.get()
-        size4 = Size4.get()
-        size5 = Size5.get()
-        delivery = Delivery.get()
-        qty = Quantity.get()
-        cursor2.execute('CREATE TABLE IF NOT EXISTS [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket)' %code)
-        cursor2.execute(r'INSERT INTO [%s] (Barcode,OrderNo,Style,Delivery,Size2,Size3,Size4,Size5,Qty,Ticket) VALUES(?,?,?,?,?,?,?,?,?,?)' %code, [ barcode, code, "BOYS SYNTHETIC", delivery, size2, size3, size4, size5, qty, 158])
-        updated = cursor2.rowcount
-        conn2.commit()
-        cursor2.close()
-        root.destroy()
-        sys.exit(updated)  # return value whether record has been updated
+    else:
+        messagebox.showwarning(title="Confirmation", message="The Size Range Does Not Equal The Total.\nPlease Confirm Sizes and Total Again.")
 
 label_0 = Label(root, text="Boys Synthetic", width=13,
                 background="lightskyblue3", font=("bold", 20)).place(x=85, y=23)

@@ -12,11 +12,18 @@ style = ttk.Style()
 
 OrderNo = StringVar()
 Supplier = StringVar()
-suppliers = ("RALEHLATHE", "MANKOKANA")
+suppliers = ("RALEHLATHE", "RALEHLATHE", "MANKOKANA", "DURBAN")
 Size2 = IntVar()
 Size3 = IntVar()
 Size4 = IntVar()
 Size5 = IntVar()
+
+with sqlite3.connect('Reflex Footwear.sql3') as conn:
+    cursor = conn.cursor()
+    orderno_data = cursor.execute("SELECT Order3 FROM HandlacingB")
+    orderno_list = [r for r, in orderno_data]
+    orderno = StringVar()
+    orderno.set(orderno_list[0])
 
 dateTimeObj = datetime.now()
 timestampStr = dateTimeObj.strftime("%d-%b-%Y")
@@ -44,10 +51,9 @@ def b_receive():
 label_0 = Label(root, text="Receive Uppers", width=13, relief="sunken",
                 background="tomato", font=("bold", 20)).place(x=80, y=23)
 
-label_on = Label(root, text="Order No:", width=20,
-                 background="tomato", font=("bold", 11)).place(x=40, y=90)
-entry_on = Entry(root, textvar=OrderNo, background="yellow",
-                 font=("bold", 10)).place(x=160, y=90)
+label_on = Label(root, text="Order No:", width=20, background="tomato", font=("bold", 11)).place(x=40, y=90)
+orderno_option = OptionMenu(root, OrderNo, *orderno_list).place(x=160, y=90)
+#entry_on = Entry(root, textvar=OrderNo, background="yellow", font=("bold", 10)).place(x=160, y=90)
 
 label_2 = Label(root, text="Supplier:", width=20,
                 background="tomato", font=("bold", 11)).place(x=40, y=120)
