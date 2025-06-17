@@ -32,27 +32,19 @@ def stock_lookup():
         item_0_in_result1 = '\n'.join([x[1] for x in results])
         item_0_in_result2 = [_[2] for _ in results]
         item_0_in_result3 = '\n'.join([x[3] for x in results])
-        Label(root, text="Description:", width=20, background="lightgreen",
-              font=("Arial, bold", 14)).place(x=40, y=160)
-        Label(root, text=item_0_in_result1, width=40, background="lightgreen", font=(
-            "Arial, bold", 14)).place(x=250, y=160)
-        Label(root, text="Unit:", width=20, background="lightgreen",
-              font=("Arial, bold", 14)).place(x=40, y=210)
-        Label(root, text=item_0_in_result3, width=20, background="lightgreen", font=(
-            "Arial, bold", 14)).place(x=250, y=210)
-        Label(root, text="Quantity:", width=20, background="lightgreen",
-              font=("Arial, bold", 14)).place(x=40, y=260)
-        Label(root, text=item_0_in_result2, width=20, background="lightgreen", font=(
-            "Arial, bold", 14)).place(x=250, y=260)
+        Label(root, text="Description:", width=20, background="lightgreen", font=("Arial, bold", 14)).place(x=40, y=160)
+        Label(root, text=item_0_in_result1, width=40, background="lightgreen", font=("Arial, bold", 14)).place(x=250, y=160)
+        Label(root, text="Unit:", width=20, background="lightgreen", font=("Arial, bold", 14)).place(x=40, y=210)
+        Label(root, text=item_0_in_result3, width=20, background="lightgreen", font=("Arial, bold", 14)).place(x=250, y=210)
+        Label(root, text="Quantity:", width=20, background="lightgreen", font=("Arial, bold", 14)).place(x=40, y=260)
+        Label(root, text=item_0_in_result2, width=20, background="lightgreen", font=("Arial, bold", 14)).place(x=250, y=260)
         cursor.close()
         conn.commit()
 
 
-label_0 = Label(root, text="Search Item", width=12, background="lightgreen",
-                foreground="grey15", font=("Arial, bold", 20)).place(x=235, y=23)
+label_0 = Label(root, text="Search Item", width=12, background="lightgreen", foreground="grey15", font=("Arial, bold", 20)).place(x=235, y=23)
 
-label_1 = Label(root, text="Item Code", width=20, background="lightgreen",
-                foreground="grey15", font=("Arial, bold", 16)).place(x=120, y=90)
+label_1 = Label(root, text="Item Code", width=20, background="lightgreen", foreground="grey15", font=("Arial, bold", 16)).place(x=120, y=90)
 
 # Changed Normal input to Option Menu
 # entry_1 = Entry(root, textvar=ItemCode, background="lightgreen", font=("Arial Narrow, bold", 14)).place(x=250, y=90)

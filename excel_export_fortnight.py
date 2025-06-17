@@ -7,12 +7,13 @@ from datetime import datetime
 from tkcalendar import Calendar
 
 dateTimeObj = datetime.now()
-
-timestampStr = dateTimeObj.strftime("%d-%b-%Y")
+# timestampStr = dateTimeObj.strftime("%dd-%mm-%yyyy")
+timestampStr = dateTimeObj.strftime("%m-%d-%yyyy")
 
 # Connect to the database
 conn = sqlite3.connect("Reflex Footwear.sql3")
 cursor = conn.cursor()
+
 
 def export_to_excel():
     # Retrieve the variables from the input fields
@@ -31,7 +32,7 @@ def export_to_excel():
     conn.close()
 
     # Get the directory of the database
-    db_dir = os.path.dirname(os.path.abspath("C:\RSoft\Current\Reflex Footweear.sql3"))
+    db_dir = os.path.dirname(os.path.abspath("C:\RSoft\Current\Reflex Footwear.sql3"))
 
     # Create the folder directory where you want to save the file
     folder_dir = os.path.join(db_dir, "Fortnigtly Scores")
@@ -51,7 +52,8 @@ root.geometry('600x400')
 root.title("Export Fortnight")
 root.config(bg="lightblue2")
 
-cale = Calendar(root,selectmode = "day",year=2022,month=1,date=1)
+cale = Calendar(root,selectmode = "day",year=2025,month=1,date=1)
+# cale = Calendar(root,selectmode = "day",month=1,date=1)
 
 def fetch_date():
     date.config(text = "Current month:" + cale.get_date())

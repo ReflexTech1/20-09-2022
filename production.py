@@ -532,6 +532,7 @@ def Confirm():
     exit1 = Button(root3, text='No', width=11, command=root3.destroy).place(x=170, y=80)
     # root3.mainloop()
 
+
 edit = Menu(root, tearoff = 0)
 edit.add_separator()
 edit.add_command(label ="Production", command = ClickPB, activebackground="Blue", font=('Calibri', 14))
@@ -545,7 +546,7 @@ edit.add_separator()
 def production():
     tree.delete(*tree.get_children())
     tree.tag_configure("evenrow",background='white')
-    # tree.tag_configure("oddrow",background='grey80')
+    #tree.tag_configure("oddrow",background='grey80')
     with sqlite3.connect('Reflex Footwear.sql3') as conn:
         mycursor = conn.cursor()
         mycursor.execute("SELECT Order2,Style,Deldate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped FROM Production ORDER BY DelDate ASC")

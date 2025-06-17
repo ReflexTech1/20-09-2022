@@ -283,7 +283,7 @@ def DblClick(event):
     elif 'GIRLS' in desc:
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5,Size6,Size7,Size8b FROM Planning WHERE OrderNo=?', (order,))
+            cursor.execute('SELECT DatePlanned,OrderNo,Style,Pairs,Delivery,Size2,Size3,Size4,Size5,Size6,Size7b,Size8b FROM Planning WHERE OrderNo=?', (order,))
             results = cursor.fetchall()
 
             item_0_in_result = [_[0] for _ in results]
@@ -340,7 +340,7 @@ def DblClick(event):
     else:
         with sqlite3.connect('Reflex Footwear.sql3') as conn:
             cursor = conn.cursor()
-            cursor.execute('SELECT DatePlanned,OrderNo,Style,Pairs,Delivery,Size6,Size7,Size8b,Size9b,Size10b FROM Planning WHERE OrderNo=?', (order,))
+            cursor.execute('SELECT DatePlanned,OrderNo,Style,Pairs,Delivery,Size6,Size7b,Size8b,Size9b,Size10b FROM Planning WHERE OrderNo=?', (order,))
             results = cursor.fetchall()
 
             item_0_in_result = [_[0] for _ in results]

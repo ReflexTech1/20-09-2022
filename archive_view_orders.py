@@ -72,6 +72,27 @@ style.configure('N.TButton', font=('Arial Narrow', 14, 'bold',
     #if ret3:
         #orders()
 
+def ClickUnArch():
+        curItem = tree.focus()
+        code = tree.item(curItem)['values'][0]
+
+        with sqlite3.connect('Reflex Footwear.sql3') as conn2:
+            cursor2 = conn2.cursor()
+            cursor2.execute('INSERT INTO MyShoe SELECT * FROM MyShoe_Archive WHERE OrderNo=?', [code])
+            cursor2.execute('DELETE FROM MyShoe_Archive WHERE OrderNo=?', [code])
+            cursor2.execute('INSERT INTO Production  SELECT * FROM Production_Archive WHERE Order2=?', [code])
+            cursor2.execute('DELETE FROM Production_Archive WHERE Order2=?', [code])
+            cursor2.execute('INSERT INTO Planning  SELECT * FROM Planning_Archive WHERE OrderNo=?', [code])
+            cursor2.execute('DELETE FROM Planning_Archive WHERE OrderNo=?', [code])
+            cursor2.execute('INSERT INTO ProdBreak_Archive SELECT * FROM ProductionBreakdown WHERE Order2=?', [code])
+            cursor2.execute('DELETE FROM ProdBreak_Archive WHERE Order2=?', [code])
+            cursor2.execute('INSERT INTO Production_Balances SELECT * FROM ProdBal_Archive WHERE Order2=?', [code])
+            cursor2.execute('DELETE FROM ProdBal_Archive WHERE Order2=?', [code])
+            updated = cursor2.rowcount
+            cursor2.close()
+            conn2.commit()
+            #root.destroy()
+            root.mainloop()
 
 def tkinter11():
     ret4 = os.system('python archive_view_production.py')
@@ -91,6 +112,8 @@ def tkinter13():
         orders()
 
 
+
+
 def close_screen(e):
     	command=root.destroy()
 root.bind('<Escape>', lambda e: close_screen(e))
@@ -102,6 +125,7 @@ btn = Button(root, text='Exit', style='E.TButton', command=root.destroy).pack(si
 btn4 = Button(root, text='View Production', style='N.TButton', command=tkinter11).pack(side='left')
 btn5 = Button(root, text='View Planning', style='N.TButton', command=tkinter12).pack(side='left')
 btn6 = Button(root, text='Export', style='N.TButton', command=tkinter13).pack(side='right')
+btn6 = Button(root, text='Unarchive', style='N.TButton', command=ClickUnArch).pack(side='left')
 
 orders()
 

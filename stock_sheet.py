@@ -128,10 +128,8 @@ tree.configure(yscrollcommand=scroll.set)
 
 # Button Style Configuration
 style = Style()
-style.configure('E.TButton', font=('Century Gothic', 12, 'bold',
-                                   'underline'), foreground='firebrick3', background='black')
-style.configure('I/S.TButton', font=('Century Gothic', 12, 'bold',
-                                     'underline'), foreground='dodgerblue4', background='black')
+style.configure('E.TButton', font=('Century Gothic', 12, 'bold', 'underline'), foreground='firebrick3', background='black')
+style.configure('I/S.TButton', font=('Century Gothic', 12, 'bold', 'underline'), foreground='dodgerblue4', background='black')
 
 
 # Program to Open on Button Click

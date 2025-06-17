@@ -71,8 +71,8 @@ def nsme_slipper():
             cursor.execute(r'INSERT INTO SlipRequired (Factory,InputDate,OrderNo,Style,Pairs,DelDate,Upper,Sock,Ribbon,Binding,Gusset,NSLASoles34,NSLASoles56,NSLASoles78)'
                            ' VALUES(?,?,?,?,?,?,?*(1.45/25),?*(1.45/20.4),?*(0.055),?*(1.1),?*(0.16),?,?,?)', ["Reflex", timestampStr, code, "NSLA SLIPPER", qty, delivery, qty, qty, qty, qty, qty, size34, size56, size78])
             # Insert into Production_Balances
-            cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,Warehouse,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
-                           "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, qty, qty, qty, qty, qty, "0",])
+            cursor.execute(r'INSERT INTO SlipProd_Balances (Factory,Planned,Order2,Style,DelDate,Orderqty,Cutting,Assembly,Closing,Finishing,Despatch,ToShip,Shipped) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)', [
+                           "Reflex", timestampStr, code, "NSLA SLIPPER", delivery, qty, qty, qty, qty, qty,qty, qty, "0",])
             # 3mm Ribbon
             cursor.execute(r'UPDATE StockSheet SET Quantity=Quantity-?*(0.055), LastRec=? WHERE ItemCode=?', (qty, timestampStr, "RIB0001",))
             # Soles
