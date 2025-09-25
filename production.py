@@ -5,7 +5,7 @@ from tkinter.ttk import *
 import os
 from datetime import datetime
 import customtkinter
-from PIL import Image, ImageTk
+#from PIL import Image, ImageTk
 import tkinter.messagebox
 
 root = Tk()
@@ -568,7 +568,7 @@ style.map('Treeview', background=[('selected', 'firebrick')])
 
 # Modify the font of the heading and select columns
 style.configure("Treeview.Heading", font=( "Calibri", 15, 'bold'), background='silver', foreground='black')
-tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11), height=44, show="headings")
+tree = ttk.Treeview(frame, columns=(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11), height=43, show="headings")
 tree.pack(side='left')
 
 tree.heading(1, text="Order No.", anchor=N)
@@ -603,6 +603,7 @@ tree.configure(yscrollcommand=scroll.set)
 
 style = Style()
 style.configure('R.TButton', font=('Calibri', 14, 'bold', 'underline'), foreground='dodgerblue4', background='grey80')
+style.configure('B.TButton', font=('Calibri', 14, 'bold', 'underline'), foreground='red', background='grey80')
 
 
 def tkinter6():
@@ -624,15 +625,16 @@ def tkinter8():
 
 
 
-btn = customtkinter.CTkButton(root, text="Close (Esc)", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='red', command=root.destroy).pack(side='right')
-btn5 = customtkinter.CTkButton(root, text="Export", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter6).pack(side='right')
-btn6 = customtkinter.CTkButton(root, text="View Scores", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter7).pack(side='left')
-btn6 = customtkinter.CTkButton(root, text="View Balances", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter8).pack(side='left')
+#btn = customtkinter.CTkButton(root, text="Close (Esc)", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='red', command=root.destroy).pack(side='right')
+#btn5 = customtkinter.CTkButton(root, text="Export", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter6).pack(side='right')
+#btn6 = customtkinter.CTkButton(root, text="View Scores", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter7).pack(side='left')
+#btn7 = customtkinter.CTkButton(root, text="View Balances", border_width=3, text_font=('Calibri', -15, 'bold'), fg_color='green', command=tkinter8).pack(side='left')
 
 # Normal button / Not customTkinter
-# btn = Button(root, text='Close (Esc)', style='B.TButton', command=root.destroy).pack(side='right')
-# btn5 = Button(root, text="Export", style='R.TButton', command=tkinter6).pack(side='right')
-# btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')
+btn = Button(root, text='Close (Esc)', style='B.TButton', command=root.destroy).pack(side='right')
+btn5 = Button(root, text="Export", style='R.TButton', command=tkinter6).pack(side='right')
+btn6 = Button(root, text="View Scores", style='R.TButton', command=tkinter7).pack(side='left')
+btn7 = Button(root, text="View Balances", style='R.TButton', command=tkinter8).pack(side='left')
 
 production()
 

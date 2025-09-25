@@ -19,115 +19,115 @@ def tkinter1():
 
 
 def tkinter2():
-    ret = os.system('python orders_slip.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\orders_slip.py')
     if ret:
         exit()
 
 
 def tkinter3():
-    ret = os.system('python orders_sandal.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\orders_sandal.py')
     if ret:
         exit()
 
 
 def tkinter_stock():
-    ret = os.system('python stock_sheet.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\stock_sheet.py')
     if ret:
         exit()
 
 
 def tkinter_log():
-    ret = os.system('python logistics_view.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\logistics_view.py')
     if ret:
         exit()
 
 
 def tkinter6():
-    ret = os.system('python production.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\production.py')
     if ret:
         exit()
 
 
 def tkinter7():
-    ret = os.system('python production_slip.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\production_slip.py')
     if ret:
         exit()
 
 
 def tkinter8():
-    ret = os.system('python production_sandal.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\production_sandal.py')
     if ret:
         exit()
 
 
 def tkinter9():
-    ret = os.system('python handlacing.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\handlacing.py')
     if ret:
         exit()
 
 
 def tkinter10():
-    ret = os.system('python pb_lacing.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\pb_lacing.py')
     if ret:
         exit()
 
 
 def tkinter11():
-    ret = os.system('python b_lacing.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\b_lacing.py')
     if ret:
         exit()
 
 
 def tkinter12():
-    ret = os.system('python m_lacing.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\m_lacing.py')
     if ret:
         exit()
 
 
 def tkinter_ex1():
-    ret = os.system('python excel_export_orders.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_orders.py')
     if ret:
         exit()
 
 
 def tkinter_ex2():
-    ret = os.system('python excel_export_prod_1.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_prod_1.py')
     if ret:
         exit()
 
 
 def tkinter_ex3():
-    ret = os.system('python excel_export_bal.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_bal.py')
     if ret:
         exit()
 
 
 def tkinter_ex4():
-    ret = os.system('python excel_export_stock.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_stock.py')
     if ret:
         exit()
 
 
 def tkinter_ex5():
-    ret = os.system('python excel_export_planning.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_planning.py')
     if ret:
         exit()
 
 
 def tkinter_ex6():
-    ret = os.system('python excel_export_fortnight.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_fortnight.py')
     if ret:
         exit()
 
 
 def tkinter_ex7():
-    ret = os.system('python excel_export_orderno.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\excel_export_orderno.py')
     if ret:
         exit()
 
 
 def tkinter_arch():
-    ret = os.system('python archive_view_orders.py')
+    ret = os.system('python C:\RSoft\Current\Main\NewOrders\archive_view_orders.py')
     if ret:
         exit()
 
